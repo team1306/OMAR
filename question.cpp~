@@ -1,0 +1,44 @@
+#include "question.h"
+#include <string>
+
+Question::Question(int a, int b, int c, int d, std::string quest) {
+  ur.x = a;
+  ur.y = b;
+  ll.x = c;
+  ll.y = d;
+  q = quest;
+}
+
+Question::Question(point n1, point n2, std::string quest) {
+  ur = n1;
+  ll = n2;
+  q = quest;
+}
+
+Question::Question(int a, int b, int c, int d, int width, int height, int spx, int spy, std::string quest) {
+  Question(a, b, c, d, quest);
+  scale(width, height, spx, spy);
+}
+
+Question::Question(point n1, point n2, size a, size b, std::string quest) {
+  Question(n1, n2, quest);
+  scale(a, b);
+}
+
+void Question::scale(int width, int height, int spx, int spy) {
+  ur.x = (ur.x / spx) * width;
+  ur.y = (ur.y / spy) * height;
+  ll.x = (ll.x / spx) * width;
+  ll.y = (ll.y / spx) * height;
+}
+
+void Question::scale(size a, size b) {
+  ur.x = (ur.x / a.width) * b.width;
+  ur.y = (ur.y / a.height) * b.height;
+  ll.x = (ll.x / a.width) * b.width;
+  ll.y = (ll.y / a.height) * b.height;
+}
+
+void Question::setAnswer(bool b) {
+  answer = b;
+}

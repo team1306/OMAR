@@ -1,0 +1,43 @@
+#include <string>
+#include <vector>
+#include "read.h"
+#include "question.h"
+#include "cv.h"
+#include "highgui.h"
+
+using namespace cv;
+
+Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<point> pointsll, const Mat& src) {
+  image = src;
+  for(int i=0; i<q.size(); i++) {
+    Question z (pointsur[i], pointsll[i], q[i]);
+    questions.push_back(z);
+  }
+}
+
+Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<point> pointsll, const Mat& src, size a, size b) {
+  sp = a;
+  page = b;
+  Page(q, pointsur, pointsll, src);
+}
+  
+void Page::read(void) {
+  for(int i=0; i<questions.size(); i++) {
+    questions[i].scale(sp, page);
+  }
+  int total;
+  int t;
+  for(int i=0; i<questions.size(); i++) {
+    total = 0;
+    t = 0;
+    for(int x=questions[i].getUR().x; x<questions[i].getLL().x; x++) {
+      for(int y=questions[i].getUR().y; y<questions[i].getLL().y; y++) {
+	total += image.at<uchar>(y, x);
+	t++;
+      }
+    }
+    if(t != 0 && total / t > 128) {
+      questions[i].setAnswer(true);
+    }
+  }
+}
