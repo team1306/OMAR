@@ -13,26 +13,23 @@ Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<poin
   page = b;
   src.copyTo(image);
   for(int i=0; i<q.size(); i++) {
-    questions.push_back(Question (pointsur[i], pointsll[i], sp, page, q[i]));
+    questions.push_back(Question (pointsur[i], pointsll[i], q[i]));
   }
 }
   
 void Page::read(void) {
-  std::cout << "1" << std::endl;
-  double total;
-  int t;
+  Scalar total;
+  Mat t;
   for(int i=0; i<questions.size(); i++) {
-    total = 0;
-    for(int x=questions[i].getUR().x; x<questions[i].getLL().x; x++) {
-      for(int y=questions[i].getLL().y; y<questions[i].getUR().y; y++) {
-	total += double(image.at<uchar>(y, x))/((questions[i].getLL().x - questions[i].getUR().x) * (questions[i].getUR().y - questions[i].getLL().y));
-      }
-    }
-    std::cout << total << std::endl;
-    if(total < 200) {
+    t = Mat(image, Rect(Point((double(questions[i].getLL().x)/double(sp.width))*page.width, page.height - (double(questions[i].getLL().y)/double(sp.height))*page.height), Point((double(questions[i].getUR().x)/double(sp.width))*page.width, page.height - (double(questions[i].getUR().y)/double(sp.height))*page.height)));
+    total = mean(t);
+    std::cout << questions[i].getName() << ": " << total << std::endl;
+    if(pow(total[0], 2) + pow(total[1], 2) + pow(total[2], 2) < 67500) {
+      std::cout << questions[i].getName() << ": true" << std::endl;
       questions[i].setAnswer(true);
     }
     else {
+      std::cout << questions[i].getName() << ": false" << std::endl;
       questions[i].setAnswer(false);
     }
   }
