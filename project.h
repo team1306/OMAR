@@ -15,12 +15,14 @@ class Tournament {
   void loadScans(std::string);
   void prepare(void);
   void process(void);
+  void report(std::string);
   int getDir(std::string, std::vector<std::string>&);
   std::vector<std::vector<bool> > answers(void);
   std::vector<point> getUR(void) {return ur;}
   std::vector<point> getLL(void) {return ll;}
   size sp;
  private:
+  std::vector<std::string> questions;
   std::vector<Page> pages;
   std::vector<Mat> srcs;
   std::vector<point> ur, ll;

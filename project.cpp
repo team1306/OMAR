@@ -49,7 +49,6 @@ void Tournament::prepare(void) {
   sp.width = circles[3].x - circles[0].x;
   sp.height = circles[0].y - circles[1].y;
 
-  std::vector<std::string> q;
   std::string s;
   int x, y;
   point a, b;
@@ -61,20 +60,36 @@ void Tournament::prepare(void) {
     b.y -= circles[1].y;
     ur.push_back(a);
     ll.push_back(b);
-    q.push_back(s);
+    questions.push_back(s);
   }
 
   size z;
   for(int i=0; i<srcs.size(); i++) {
     z.width = srcs[i].cols;
     z.height = srcs[i].rows;
-    pages.push_back(Page (q, ur, ll, srcs[i], sp, z));
+    pages.push_back(Page (questions, ur, ll, srcs[i], sp, z));
   }
 }
 
 void Tournament::process(void) {
   for(int i=0; i<pages.size(); i++) {
     pages[i].read();
+  }
+}
+
+void Tournament::report(std::string file) {
+  std::ofstream fout (file.c_str());
+  for(int i=0; i<questions.size(); i++) {
+    fout << questions[i] << ";";
+  }
+  fout << std::endl;
+  std::vector<bool> a;
+  for(int i=0; i<pages.size(); i++) {
+    a = pages[i].answers();
+    for(int x=0; x<a.size(); x++) {
+      fout << a[x] << ";";
+    }
+    fout << std::endl;
   }
 }
 
