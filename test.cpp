@@ -10,14 +10,13 @@ using namespace cv;
 int main() {
   std::vector<std::string> files;
   files.push_back("form1.jpg");
-  files.push_back("form2.jpg");
-  files.push_back("form3.jpg");
 
   Tournament t (files);
 
   t.prepare();
   std::cout << "prepared" << std::endl;
   t.process();
+  t.report("report.csv");
 
   std::vector<std::vector<bool> > answers;
   answers = t.answers();
@@ -29,7 +28,12 @@ int main() {
     std::cout << std::endl;
   }
 
-  Mat src = imread("source.jpg");
+  Mat black = imread("black.jpg");
+  std::cout << black.at<int>(black.rows/2, black.cols/2) << std::endl;
+  Mat white = imread("white.jpg");
+  std::cout << double(white.at<uchar>(white.rows/2, white.cols/2)) << std::endl;
+
+  Mat src = imread("form1.jpg");
   pyrDown(src, src, Size(src.cols/2, src.rows/2));
   Mat org (src);
   std::vector<Vec3f> v;
