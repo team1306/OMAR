@@ -23,13 +23,10 @@ void Page::read(void) {
   for(int i=0; i<questions.size(); i++) {
     t = Mat(image, Rect(Point((double(questions[i].getLL().x)/double(sp.width))*page.width, page.height - (double(questions[i].getLL().y)/double(sp.height))*page.height), Point((double(questions[i].getUR().x)/double(sp.width))*page.width, page.height - (double(questions[i].getUR().y)/double(sp.height))*page.height)));
     total = mean(t);
-    std::cout << questions[i].getName() << ": " << total << std::endl;
     if(pow(total[0], 2) + pow(total[1], 2) + pow(total[2], 2) < 67500) {
-      std::cout << questions[i].getName() << ": true" << std::endl;
       questions[i].setAnswer(true);
     }
     else {
-      std::cout << questions[i].getName() << ": false" << std::endl;
       questions[i].setAnswer(false);
     }
   }
