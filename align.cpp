@@ -12,9 +12,9 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   std::vector<Vec3f> circles;
 
   cvtColor(source, gray, CV_BGR2GRAY);
-  GaussianBlur(gray, gray, Size(9, 9), 2, 2);
+  //GaussianBlur(gray, gray, Size(9, 9), 2, 2);
 
-  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 1, gray.rows/8, 20, 5, 2, 7);
+  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 2, 32, 1, 1, 5, 20);
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
   int a, b, c, d;
