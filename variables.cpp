@@ -8,7 +8,7 @@ using namespace cv;
 int hi = 1, lo = 1;
 
 int main(int argc, char* argv[]) {
-    Mat orig = imread("1-1.jpg");
+    Mat orig = imread("form1.jpg");
     int key = 0;
 
     namedWindow("circles", 1);
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
         vector<Vec3f> circles;
 
         // also preventing crash with hi, lo threshold here...
-        HoughCircles(snooker, circles, CV_HOUGH_GRADIENT, 2, 32.0, hi > 0 ? hi : 1, lo > 0 ? lo : 1 );
+        HoughCircles(snooker, circles, CV_HOUGH_GRADIENT, 2, 32.0, hi > 0 ? hi : 1, lo > 0 ? lo : 1 , 5, 20);
         for( size_t i = 0; i < circles.size(); i++ )
         {
              Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
