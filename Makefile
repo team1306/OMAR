@@ -4,8 +4,17 @@ LIBS=`pkg-config opencv --libs`
 
 all: test page.o question.o project.o
 
+omar: omar.o align.o project.o page.o question.o
+	$(CC) omar.o align.o project.o page.o question.o -o omar $(CFLAGS) $(LIBS)
+
 test: test.o align.o project.o page.o question.o
 	$(CC) test.o align.o project.o page.o question.o -o test $(CFLAGS) $(LIBS)
+
+omar.o: omar.cpp
+	$(CC) -c omar.cpp $(CFLAGS)
+
+main.o: main.cpp
+	$(CC) -c main.cpp $(CFLAGS)
 
 test.o: test.cpp
 	$(CC) -c test.cpp $(CFLAGS)
