@@ -8,7 +8,7 @@ using namespace cv;
 int hi = 1, lo = 1;
 
 int main(int argc, char* argv[]) {
-    Mat orig = imread("form1.jpg");
+    Mat orig = imread("scans/form1.jpg");
     int key = 0;
 
     namedWindow("circles", 1);
