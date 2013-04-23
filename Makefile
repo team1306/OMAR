@@ -1,8 +1,8 @@
 CC=g++
-CFLAGS=`pkg-config opencv --cflags` -g
+CFLAGS=`pkg-config opencv --cflags`
 LIBS=`pkg-config opencv --libs`
 
-all: test page.o question.o project.o
+all: omar test
 
 omar: omar.o align.o project.o page.o question.o
 	$(CC) omar.o align.o project.o page.o question.o -o omar $(CFLAGS) $(LIBS)
