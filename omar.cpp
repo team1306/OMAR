@@ -9,5 +9,6 @@ int main(void) {
   t.prepare();
   t.process();
   t.report("report.csv");
+  std::system("python ./bintonum.py");
   return 0;
 }
