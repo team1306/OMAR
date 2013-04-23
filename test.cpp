@@ -9,7 +9,7 @@ using namespace cv;
 
 int main() {
   std::vector<std::string> files;
-  files.push_back("form1.jpg");
+  files.push_back("scans/form1.jpg");
 
   Tournament t (files);
 
