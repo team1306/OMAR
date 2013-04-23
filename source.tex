@@ -57,7 +57,7 @@
   \end{tikzpicture}
   #3
   \\
-  \write\mywrite{#1 \zposx{#1-ll} \zposy{#1-ll} \zposx{#1-ur} \zposy{#1-ur}}%
+  \write\mywrite{#1.#2.#3 \zposx{#1-ll} \zposy{#1-ll} \zposx{#1-ur} \zposy{#1-ur}}%
 }
 
 \newcommand{\caldots}[0]{%
@@ -141,10 +141,10 @@ Your team number: \\[3.5em]
 \begin{center}
   \textbf{Team Number:\linebreak} \newline
   \begin{multicols}{4}
-    \digit{teamnumber1}\columnbreak
-    \digit{teamnumber2}\columnbreak
-    \digit{teamnumber3}\columnbreak
-    \digit{teamnumber4}
+    \digit{teamnumber.1000}\columnbreak
+    \digit{teamnumber.100}\columnbreak
+    \digit{teamnumber.10}\columnbreak
+    \digit{teamnumber.1}
   \end{multicols}
 \end{center}
 \end{minipage}
@@ -153,9 +153,9 @@ Your team number: \\[3.5em]
 \begin{center}
   \textbf{Round Number:} \newline
   \begin{multicols}{3}
-    \digit{roundnumber1}\columnbreak
-    \digit{roundnumber2}\columnbreak
-    \digit{roundnumber3}
+    \digit{roundnumber.100}\columnbreak
+    \digit{roundnumber.10}\columnbreak
+    \digit{roundnumber.1}
   \end{multicols}
 \end{center}
 \end{minipage}
@@ -167,23 +167,23 @@ Your team number: \\[3.5em]
   Climbing Level: \\
   (0 means floor)
   \begin{multicols}{2}
-    \checkBox{climbingLevel0}{A}{0 (floor)} \newline
-    \checkBox{climbingLevel1}{B}{1} \nextcolumn
-    \checkBox{climbingLevel2}{C}{2}\newline
-    \checkBox{climbingLevel3}{D}{3}
+    \checkBox{climbingLevel.0}{A}{0} \newline
+    \checkBox{climbingLevel.1}{B}{1} \nextcolumn
+    \checkBox{climbingLevel.2}{C}{2}\newline
+    \checkBox{climbingLevel.3}{D}{3}
   \end{multicols}
 \end{minipage}}
 \\[.25em]
 \fbox{\noindent\begin{minipage}{\linewidth} % Pyramid Goal Frisbees
   Pyramid Goal Frisbees: \\
   \begin{multicols}{3}
-    \checkBox{pyrGoals0}{A}{0}\newline
-    \checkBox{pyrGoals1}{B}{1}\newline
-    \checkBox{pyrGoals2}{C}{2} \nextcolumn
-    \checkBox{pyrGoals3}{D}{3}\newline
-    \checkBox{pyrGoals4}{E}{4}\newline
-    \checkBox{pyrGoals5}{F}{5} \nextcolumn
-    \checkBox{pyrGoals6}{G}{6}
+    \checkBox{pyrGoals.0}{A}{0}\newline
+    \checkBox{pyrGoals.1}{B}{1}\newline
+    \checkBox{pyrGoals.2}{C}{2} \nextcolumn
+    \checkBox{pyrGoals.3}{D}{3}\newline
+    \checkBox{pyrGoals.4}{E}{4}\newline
+    \checkBox{pyrGoals.5}{F}{5} \nextcolumn
+    \checkBox{pyrGoals.6}{G}{6}
   \end{multicols}
 \end{minipage}}
 \\
@@ -191,12 +191,12 @@ Your team number: \\[3.5em]
   Defense Effectiveness: \\
   (0 means not exhibited)
   \begin{multicols}{3}
-    \checkBox{defense0}{A}{0 (na)}\newline
-    \checkBox{defense1}{B}{1} \nextcolumn
-    \checkBox{defense2}{C}{2}\newline
-    \checkBox{defense3}{D}{3} \nextcolumn
-    \checkBox{defense4}{E}{4}\newline
-    \checkBox{defense5}{F}{5}
+    \checkBox{defense.0}{A}{0}\newline
+    \checkBox{defense.1}{B}{1} \nextcolumn
+    \checkBox{defense.2}{C}{2}\newline
+    \checkBox{defense.3}{D}{3} \nextcolumn
+    \checkBox{defense.4}{E}{4}\newline
+    \checkBox{defense.5}{F}{5}
   \end{multicols}
 \end{minipage}}
 \\[.25em]
@@ -204,10 +204,10 @@ Your team number: \\[3.5em]
   Driver Quality: \\
   (0 means fancybot)
   \begin{multicols}{2}
-    \checkBox{field0}{A}{ARC}\newline
-    \checkBox{field1}{B}{CUR}\nextcolumn
-    \checkBox{field2}{C}{GAL}\newline
-    \checkBox{field3}{D}{NEW}
+    \checkBox{field.0}{A}{ARC}\newline
+    \checkBox{field.1}{B}{CUR}\nextcolumn
+    \checkBox{field.2}{C}{GAL}\newline
+    \checkBox{field.3}{D}{NEW}
   \end{multicols}
 \end{minipage}}
 \end{multicols}
@@ -251,8 +251,8 @@ Your team number: \\[3.5em]
 	\begin{center}
 		\textbf{Tele \linebreak High \linebreak Goals:} \\[1em]
                 \begin{multicols}{2}
-		  \digit{teleHighGoals1}\nextcolumn
-                  \digit{teleHighGoals2}
+		  \digit{teleHighGoals.10}\nextcolumn
+                  \digit{teleHighGoals.1}
                 \end{multicols}
 	\end{center}
 \end{minipage}
@@ -260,8 +260,8 @@ Your team number: \\[3.5em]
 	\begin{center}
 		\textbf{Tele \linebreak Medium \linebreak Goals:} \\[1em]
                 \begin{multicols}{2}
-		  \digit{teleMedGoals1}\nextcolumn
-                  \digit{teleMedGoals2}
+		  \digit{teleMedGoals.10}\nextcolumn
+                  \digit{teleMedGoals.1}
                 \end{multicols}
 	\end{center}
 \end{minipage}
@@ -269,8 +269,8 @@ Your team number: \\[3.5em]
 	\begin{center}
 		\textbf{Tele \linebreak Low \linebreak Goals:} \\[1em]
                 \begin{multicols}{2}
-		  \digit{teleLowGoals1}\nextcolumn
-                  \digit{teleLowGoals2}
+		  \digit{teleLowGoals.10}\nextcolumn
+                  \digit{teleLowGoals.1}
                 \end{multicols}
 	\end{center}
 \end{minipage}
