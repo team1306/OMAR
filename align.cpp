@@ -18,22 +18,22 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
   int a, b, c, d;
-  dista = distb = distc = distd = pow(source.cols, 2) + pow(source.rows, 2);
+  dista = distb = distc = distd = std::pow(source.cols, 2) + std::pow(source.rows, 2);
   for(int i=0; i<circles.size(); i++) {
-    if(pow(circles[i][0], 2) + pow(circles[i][1], 2) < dista) {
-      dista = pow(circles[i][0], 2) + pow(circles[i][1], 2);
+    if(std::pow(circles[i][0], 2) + std::pow(circles[i][1], 2) < dista) {
+      dista = std::pow(circles[i][0], 2) + std::pow(circles[i][1], 2);
       a = i;
     }
-    if(pow(source.cols - circles[i][0], 2) + pow(circles[i][1], 2) < distb) {
-      distb = pow(source.cols - circles[i][0], 2) + pow(circles[i][1], 2);
+    if(std::pow(source.cols - circles[i][0], 2) + std::pow(circles[i][1], 2) < distb) {
+      distb = std::pow(source.cols - circles[i][0], 2) + std::pow(circles[i][1], 2);
       b = i;
     }
-    if(pow(circles[i][0], 2) + pow(source.rows - circles[i][1], 2) < distc) {
-      distc = pow(circles[i][0], 2) + pow(source.rows - circles[i][1], 2);
+    if(std::pow(circles[i][0], 2) + std::pow(source.rows - circles[i][1], 2) < distc) {
+      distc = std::pow(circles[i][0], 2) + std::pow(source.rows - circles[i][1], 2);
       c = i;
     }
-    if(pow(source.cols - circles[i][0], 2) + pow(source.rows - circles[i][1], 2) < distd) {
-      distd = pow(source.cols - circles[i][0], 2) + pow(source.rows - circles[i][1], 2);
+    if(std::pow(source.cols - circles[i][0], 2) + std::pow(source.rows - circles[i][1], 2) < distd) {
+      distd = std::pow(source.cols - circles[i][0], 2) + std::pow(source.rows - circles[i][1], 2);
       d = i;
     }
   }
