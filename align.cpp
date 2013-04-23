@@ -18,22 +18,22 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
   int a, b, c, d;
-  dista = distb = distc = distd = std::pow(source.cols, 2) + std::pow(source.rows, 2);
+  dista = distb = distc = distd = source.cols*source.cols + source.rows*source.rows;
   for(int i=0; i<circles.size(); i++) {
-    if(std::pow(circles[i][0], 2) + std::pow(circles[i][1], 2) < dista) {
-      dista = std::pow(circles[i][0], 2) + std::pow(circles[i][1], 2);
+    if(circles[i][0]*circles[i][0] + circles[i][1]*circles[i][1] < dista) {
+      dista = circles[i][0]*circles[i][0] + circles[i][1]*circles[i][1];
       a = i;
     }
-    if(std::pow(source.cols - circles[i][0], 2) + std::pow(circles[i][1], 2) < distb) {
-      distb = std::pow(source.cols - circles[i][0], 2) + std::pow(circles[i][1], 2);
+    if((source.cols - circles[i][0])*(source.cols - circles[i][0]) + circles[i][1]*circles[i][1] < distb) {
+      distb = (source.cols - circles[i][0])*(source.cols - circles[i][0]) + circles[i][1]*circles[i][1];
       b = i;
     }
-    if(std::pow(circles[i][0], 2) + std::pow(source.rows - circles[i][1], 2) < distc) {
-      distc = std::pow(circles[i][0], 2) + std::pow(source.rows - circles[i][1], 2);
+    if(circles[i][0]*circles[i][0] + (source.rows - circles[i][1])*(source.rows - circles[i][1]) < distc) {
+      distc = circles[i][0]*circles[i][0] + (source.rows - circles[i][1])*(source.rows - circles[i][1]);
       c = i;
     }
-    if(std::pow(source.cols - circles[i][0], 2) + std::pow(source.rows - circles[i][1], 2) < distd) {
-      distd = std::pow(source.cols - circles[i][0], 2) + std::pow(source.rows - circles[i][1], 2);
+    if((source.cols - circles[i][0])*(source.cols - circles[i][0]) + (source.rows - circles[i][1])*(source.rows - circles[i][1]) < distd) {
+      distd = (source.cols - circles[i][0])*(source.cols - circles[i][0]) + (source.rows - circles[i][1])*(source.rows - circles[i][1]);
       d = i;
     }
   }
