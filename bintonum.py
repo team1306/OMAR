@@ -12,7 +12,8 @@ for p in [x.split(';') for x in lines[1:]]:
         if len(tags[i].split('.')) == 3: # multidigit number
             page[tags[i].split('.')[0]] = 0
             tag = tags[i].split('.')[0]
-            newtags.append(tag)
+            if tag not in newtags:
+                newtags.append(tag)
             while i < len(tags) and tags[i].split('.')[0] == tag:
                 coef = tags[i].split('.')[1]
                 while i < len(tags) and tags[i].split('.')[0] == tag and tags[i].split('.')[1] == coef:
@@ -25,14 +26,16 @@ for p in [x.split(';') for x in lines[1:]]:
         elif len(tags[i].split('.')) == 2:
             page[tags[i].split('.')[0]] = 0
             tag = tags[i].split('.')[0]
-            newtags.append(tag)
+            if tag not in newtags:
+                newtags.append(tag)
             while i < len(tags) and tags[i].split('.')[0] == tag:
                 if p[i] == '1':
                     page[tags[i].split('.')[0]] += int(tags[i].split('.')[1])
                 i += 1
         elif len(tags[i].split('.')) == 4:
             tag = tags[i].split('.')[0]
-            newtags.append(tag)
+            if tag not in newtags:
+                newtags.append(tag)
             while i < len(tags) and tags[i].split('.')[0] == tag:
                 if p[i] == '1':
                     page[tags[i].split('.')[0]] = tags[i].split('.')[3]
