@@ -2,13 +2,17 @@ CC=g++
 CFLAGS=`pkg-config opencv --cflags`
 LIBS=`pkg-config opencv --libs`
 
-all: omar test
+all: omar test source.pdf
 
 omar: omar.o align.o project.o page.o question.o
 	$(CC) omar.o align.o project.o page.o question.o -o omar $(CFLAGS) $(LIBS)
 
 test: test.o align.o project.o page.o question.o
 	$(CC) test.o align.o project.o page.o question.o -o test $(CFLAGS) $(LIBS)
+
+source.pdf: source.tex
+	pdflatex ./source.tex
+	pdflatex ./source.tex
 
 omar.o: omar.cpp
 	$(CC) -c omar.cpp $(CFLAGS)
