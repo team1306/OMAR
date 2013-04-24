@@ -23,10 +23,12 @@ void Tournament::loadScans(std::vector<std::string> s) {
   Mat m;
   for(int i=0; i<s.size(); i++) {
     m = imread(s[i]);
+    std::cout << "Read " << s[i] << std::endl;
     pyrDown(m, m, Size(m.cols/2, m.rows/2));
     align(m, m);
     crop(m, m);
     srcs.push_back(m);
+    std::cout << "Loaded " << s[i] << std::endl;
   }
 }
 
