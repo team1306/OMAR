@@ -57,6 +57,7 @@ void Tournament::prepare(void) {
   point a, b;
   while(!pos.eof()) {
     pos >> s >> a.x >> a.y >> b.x >> b.y;
+    std::cout << s << std::endl;
     a.x -= circles[1].x;
     a.y -= circles[1].y;
     b.x -= circles[1].x;
