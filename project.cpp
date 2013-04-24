@@ -50,6 +50,7 @@ void Tournament::prepare(void) {
   }
   sp.width = circles[3].x - circles[0].x;
   sp.height = circles[0].y - circles[1].y;
+  std::cout << "Read calibration circles" << std::endl;
 
   std::string s;
   int x, y;
@@ -64,6 +65,7 @@ void Tournament::prepare(void) {
     ll.push_back(b);
     questions.push_back(s);
   }
+  std::cout << "Read positions" << std::endl;
 
   size z;
   for(int i=0; i<srcs.size(); i++) {
@@ -71,6 +73,7 @@ void Tournament::prepare(void) {
     z.height = srcs[i].rows;
     pages.push_back(Page (questions, ur, ll, srcs[i], sp, z));
   }
+  std::cout << "Added pages" << std::endl;
 }
 
 void Tournament::process(void) {
