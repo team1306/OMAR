@@ -13,6 +13,8 @@ int main(void) {
   t.report("report.csv");
   std::cout << "Reported" << std::endl;
   std::system("python ./bintonum.py");
-  std::cout << "Converted" << std::endl;
+  std::cout << "Converted to csv" << std::endl;
+  std::system("python ./main.py");
+  std::cout << "Ranked teams" << std::endl;
   return 0;
 }
