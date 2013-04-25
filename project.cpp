@@ -107,11 +107,11 @@ int Tournament::getDir(std::string dir, std::vector<std::string> &files) {
   }
   
   while ((dirp = readdir(dp)) != NULL) {
-    files.push_back(dir + "/" + string(dirp->d_name));
+    if(string(dirp->d_name) != "." && string(dirp->d_name) != "..") {
+      files.push_back(dir + "/" + string(dirp->d_name));
+    }
   }
   closedir(dp);
-  files.erase(files.begin());
-  files.erase(files.begin());
   return 0;
 }
 
