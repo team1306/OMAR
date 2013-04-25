@@ -11,19 +11,19 @@ def rank(dictionary, climberWeight, shooterWeight):
     for team in dictionary["data"]:
         for rnd in dictionary["data"][str(team)]:
             # rip all raw values from json and multiply by the scores
-            if rnd["climbingpts"][2:] != '':
-                climberTotal = int(rnd["climbingpts"][2:])*climberWeight
+            if rnd["climbingLevel"] != '':
+                climberTotal = int(rnd["climbingLevel"])*10*climberWeight
             else:
                 climberTotal = 0
         
             
-            highPoints = int(rnd["telehighgoals"])*3
-            medPoints = int(rnd["telemedgoals"])*2
-            lowPoints = int(rnd["telelowgoals"])
+            highPoints = int(rnd["teleHighGoals"])*3
+            medPoints = int(rnd["teleMedGoals"])*2
+            lowPoints = int(rnd["teleLowGoals"])
             
-            highPointsAuto = int(rnd["autohighgoals.1"])*6
-            medPointsAuto = int(rnd["automedgoals.1"])*5
-            lowPointsAuto = int(rnd["autolowgoals.1"])*4      
+            highPointsAuto = int(rnd["autoHighGoals"])*6
+            medPointsAuto = int(rnd["autoMedGoals"])*5
+            lowPointsAuto = int(rnd["autoLowGoals"])*4      
             
             shooterTotal = (highPoints+medPoints+lowPoints+highPointsAuto+medPointsAuto+lowPointsAuto)*shooterWeight
             temporary.append(climberTotal+shooterTotal)
