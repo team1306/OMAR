@@ -9,7 +9,7 @@ using namespace cv;
 
 int main() {
   std::vector<std::string> files;
-  files.push_back("scans/form1.jpg");
+  files.push_back("scans/1-1.jpg");
 
   Tournament t (files);
 
@@ -28,12 +28,7 @@ int main() {
     std::cout << std::endl;
   }
 
-  Mat black = imread("black.jpg");
-  std::cout << black.at<int>(black.rows/2, black.cols/2) << std::endl;
-  Mat white = imread("white.jpg");
-  std::cout << double(white.at<uchar>(white.rows/2, white.cols/2)) << std::endl;
-
-  Mat src = imread("form1.jpg");
+  Mat src = imread("scans/1-1.jpg");
   pyrDown(src, src, Size(src.cols/2, src.rows/2));
   Mat org (src);
   std::vector<Vec3f> v;
