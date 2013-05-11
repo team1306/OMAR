@@ -1,5 +1,6 @@
 import numpy
 import csvtojson, ranking, argparse
+import json
 
 # parse the tags to get the name of the input file and the respective climbing and shooting weights
 parser = argparse.ArgumentParser()
@@ -12,8 +13,13 @@ args = parser.parse_args()
 # print the resulting ranking
 r = numpy.array(ranking.rank(csvtojson.csvtojson(args.file), args.climber, args.shooter))
 
+f = open("report.json", "w")
+f.write(json.dumps(csvtojson.csvtojson(args.file)))
+f.close()
+
 s = ''
 for x in r[:,0][::-1]:
     s += str(x) + '\n'
 f = open("rankings", "w")
 f.write(s)
+f.close()

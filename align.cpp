@@ -12,9 +12,9 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   std::vector<Vec3f> circles;
 
   cvtColor(source, gray, CV_BGR2GRAY);
-  //GaussianBlur(gray, gray, Size(9, 9), 2, 2);
+  GaussianBlur(gray, gray, Size(9, 9), 2, 2);
  
-  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 2, 32, 28, 17, 5, 20);
+  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 1, 32, 28, 23, 5, 30);
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
   int a, b, c, d;
@@ -45,7 +45,7 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
 }
 
 double getAngleOffset(vector<Vec3f> circles) {
-  double angle = atan((circles[0][1]-circles[1][1])/(circles[0][0]-circles[1][0]));
+  double angle = atan((circles[2][1]-circles[3][1])/(circles[2][0]-circles[3][0]));
   return angle*180/PI;
 }
 
@@ -64,7 +64,7 @@ void align(const Mat& source, Mat& dst) {
 void crop(const Mat& source, Mat& dest) {
   std::vector<Vec3f> circles;
   getCalibrationCircles(source, circles);
-  Rect r (cvFloor(circles[0][0]), cvFloor(circles[0][1]), cvFloor(circles[3][0])-cvFloor(circles[0][0]), cvFloor(circles[3][1])-cvFloor(circles[0][1]));
+  Rect r (cvFloor(circles[0][0]), cvFloor(circles[0][1]), cvFloor(circles[1][0])-cvFloor(circles[0][0]), cvFloor(circles[2][1])-cvFloor(circles[0][1]));
   Mat d (source, r);
   d.copyTo(dest);
 }

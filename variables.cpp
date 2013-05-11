@@ -8,7 +8,7 @@ using namespace cv;
 int hi = 1, lo = 1;
 
 int main(int argc, char* argv[]) {
-    Mat orig = imread("scans/1-1.jpg");
+    Mat orig = imread(argv[1]);
     int key = 0;
 
     namedWindow("circles", 1);
@@ -26,11 +26,12 @@ int main(int argc, char* argv[]) {
 
         Mat snooker;
         cvtColor(orig, snooker, CV_RGB2GRAY);
+	GaussianBlur(snooker, snooker, Size(9, 9), 2, 2);
 
         vector<Vec3f> circles;
 
         // also preventing crash with hi, lo threshold here...
-        HoughCircles(snooker, circles, CV_HOUGH_GRADIENT, 2, 32.0, hi > 0 ? hi : 1, lo > 0 ? lo : 1 , 5, 20);
+        HoughCircles(snooker, circles, CV_HOUGH_GRADIENT, 0.5, 20.0, hi > 0 ? hi : 1, lo > 0 ? lo : 1, 3, 25);
         for( size_t i = 0; i < circles.size(); i++ )
         {
              Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));

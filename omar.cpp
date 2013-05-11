@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <dirent.h>
-#include "project.h"
+#include "tournament.h"
 
 int main(void) {
   Tournament t ("./scans");

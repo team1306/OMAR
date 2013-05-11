@@ -36,6 +36,7 @@ for p in [x.split(';') for x in lines[1:]]:
             tag = tags[i].split('.')[0]
             if tag not in newtags:
                 newtags.append(tag)
+            page[tags[i].split('.')[0]] = tags[i].split('.')[3]
             while i < len(tags) and tags[i].split('.')[0] == tag:
                 if p[i] == '1':
                     page[tags[i].split('.')[0]] = tags[i].split('.')[3]

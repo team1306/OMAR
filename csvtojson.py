@@ -10,8 +10,7 @@ def csvtojson(f):
 
     l = []
     for tag in csv[0]: # take only the tags that contain more than a single digit
-        if '.' not in tag or 'auto' in tag or 'foul' in tag:
-            l.append(tag)
+        l.append(tag)
     dic = {'tags': l} # assign tags to the list of important tags
 
     data = {} # create data dictionary to be indexed by team number and list of teams for which lists have already been created

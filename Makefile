@@ -4,11 +4,11 @@ LIBS=`pkg-config opencv --libs`
 
 all: omar test source.pdf
 
-omar: omar.o align.o project.o page.o question.o
-	$(CC) omar.o align.o project.o page.o question.o -o omar $(CFLAGS) $(LIBS)
+omar: omar.o align.o tournament.o page.o question.o
+	$(CC) omar.o align.o tournament.o page.o question.o -o omar $(CFLAGS) $(LIBS)
 
-test: test.o align.o project.o page.o question.o
-	$(CC) test.o align.o project.o page.o question.o -o test $(CFLAGS) $(LIBS)
+test: test.o align.o tournament.o page.o question.o
+	$(CC) test.o align.o tournament.o page.o question.o -o test $(CFLAGS) $(LIBS)
 
 source.pdf: source.tex
 	pdflatex ./source.tex
@@ -23,8 +23,8 @@ main.o: main.cpp
 test.o: test.cpp
 	$(CC) -c test.cpp $(CFLAGS)
 
-project.o: project.cpp
-	$(CC) -c project.cpp $(CFLAGS)
+tournament.o: tournament.cpp
+	$(CC) -c tournament.cpp $(CFLAGS)
 
 align.o: align.cpp
 	$(CC) -c align.cpp $(CFLAGS)
@@ -36,4 +36,5 @@ page.o: page.cpp
 	$(CC) -c page.cpp $(CFLAGS)
 
 clean:
-	rm -rf *.o test
+	rm -rf *.o test omar source.pdf source.aux source.pos source.cal source.log
+
