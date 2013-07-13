@@ -2,18 +2,46 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
+#include <vector>
+#include <string>
+#include <dirent.h>
 
 using namespace cv;
 
 int hi = 1, lo = 1;
 
+int getDir(std::string dir, std::vector<std::string> &files) {
+  DIR *dp;
+  struct dirent *dirp;
+  if((dp  = opendir(dir.c_str())) == NULL) {
+    std::cout << "Error opening " << dir << std::endl;
+    return 1;
+  }
+  
+  while ((dirp = readdir(dp)) != NULL) {
+    if(string(dirp->d_name) != "." && string(dirp->d_name) != "..") {
+      files.push_back(dir + "/" + string(dirp->d_name));
+    }
+  }
+  closedir(dp);
+  return 0;
+}
+
 int main(int argc, char* argv[]) {
-    Mat orig = imread(argv[1]);
+  std::vector<std::string> files;
+  getDir(argv[1], files);
+  std::cout << "listed files" << std::endl;
+  std::string f;    
+  namedWindow("circles", 1);
+  createTrackbar("hi", "circles", &hi, 255);
+  createTrackbar("lo", "circles", &lo, 255);
+
+  do {
+    f = files.back();
+    files.pop_back();
+    Mat orig = imread(f);
     int key = 0;
 
-    namedWindow("circles", 1);
-    createTrackbar("hi", "circles", &hi, 255);
-    createTrackbar("lo", "circles", &lo, 255);
 
     pyrDown(orig, orig, Size(orig.cols/2, orig.rows/2));
 
@@ -22,7 +50,7 @@ int main(int argc, char* argv[]) {
     do
     {
         // update display and snooker, so we can play with them
-        Mat display = orig.clone();
+      Mat display = orig.clone();
 
         Mat snooker;
         cvtColor(orig, snooker, CV_RGB2GRAY);
@@ -47,6 +75,8 @@ int main(int argc, char* argv[]) {
         imshow( "circles", display );
         imshow("snooker", snooker);
         key = waitKey(33);
-    } while((char)key != 27);
-    return 0;
+    } while((char)key != 97);
+  } while(1);
+  return 0;
 }
+
