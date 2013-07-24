@@ -37,7 +37,7 @@ Question::Question(point n1, point n2, size a, size b, std::string quest) { //fi
   scale(a, b);
 }
 
-void Question::scale(int width, int height, int spx, int spy) {
+void Question::scale(int width, int height, int spx, int spy) { // scale all positions of boxes
   ur.x = (double(ur.x) / double(spx)) * width; // sp is distance in same units
   ur.y = (1 - double(ur.y) / double(spy)) * height; // height and width are size given by rows and cols
   ll.x = (double(ll.x) / double(spx)) * width;

@@ -1,0 +1,128 @@
+#include <iostream>
+#include <algorithm>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <dirent.h>
+#include "cv.h"
+#include "highgui.h"
+#include "tournament.h"
+#include "page.h"
+#include "align.h"
+
+using namespace cv;
+
+Tournament::Tournament(std::vector<std::string>& s) { // in case you already have the list of filenames
+  loadScans(s);
+}
+
+Tournament::Tournament(std::string dir) { // load paths to scans
+  loadScans(dir);
+}
+
+void Tournament::loadScans(std::vector<std::string> s) { // get names of all scans and load Mats into vector
+  Mat m;
+  for(int i=0; i<s.size(); i++) {
+    m = imread(s[i]);
+    std::cout << "Read " << s[i] << std::endl;
+    pyrDown(m, m, Size(m.cols/2, m.rows/2));
+    align(m, m);
+    crop(m, m);
+    srcs.push_back(m);
+    std::cout << "Loaded " << s[i] << std::endl;
+  }
+}
+
+void Tournament::loadScans(std::string dir) { // gets filenames from directory
+  std::vector<std::string> s;
+  getDir(dir, s);
+  loadScans(s);
+}
+
+void Tournament::prepare(void) { // read calibration circles and add Page instance for each one
+  std::ifstream pos ("source.pos");
+  std::ifstream cal ("source.cal");
+
+  std::vector<point> circles;
+  point c;
+  for(int i=0; i<4; i++) {
+    cal >> c.x >> c.y;
+    circles.push_back(c);
+  }
+  sp.width = circles[3].x - circles[0].x;
+  sp.height = circles[0].y - circles[1].y;
+  std::cout << "Read calibration circles" << std::endl;
+
+  std::string s;
+  int x, y;
+  point a, b;
+  while(!pos.eof()) {
+    pos >> s >> a.x >> a.y >> b.x >> b.y;
+    a.x -= circles[1].x;
+    a.y -= circles[1].y;
+    b.x -= circles[1].x;
+    b.y -= circles[1].y;
+    ur.push_back(a);
+    ll.push_back(b);
+    questions.push_back(s);
+  }
+  std::cout << "Read positions" << std::endl;
+
+  size z;
+  for(int i=0; i<srcs.size(); i++) {
+    z.width = srcs[i].cols;
+    z.height = srcs[i].rows;
+    pages.push_back(Page (questions, ur, ll, srcs[i], sp, z));
+  }
+  std::cout << "Added pages" << std::endl;
+}
+
+void Tournament::process(void) { // read each Page instance
+  for(int i=0; i<pages.size(); i++) {
+    pages[i].read();
+  }
+}
+
+void Tournament::report(std::string file) { // writes read data to csv file
+  std::ofstream fout (file.c_str());
+  for(int i=0; i<questions.size(); i++) {
+    fout << questions[i] << ";";
+  }
+  fout << std::endl;
+  std::vector<bool> a;
+  for(int i=0; i<pages.size(); i++) {
+    a = pages[i].answers();
+    if(std::find(a.begin(), a.end(), true) == a.end()) {
+      std::cout << "Badness! " << file << std::endl;
+    }
+    for(int x=0; x<a.size(); x++) {
+      fout << a[x] << ";";
+    }
+    fout << std::endl;
+  }
+}
+
+int Tournament::getDir(std::string dir, std::vector<std::string> &files) { // gets filenames from directory path
+  DIR *dp;
+  struct dirent *dirp;
+  if((dp  = opendir(dir.c_str())) == NULL) {
+    std::cout << "Error opening " << dir << std::endl;
+    return 1;
+  }
+  
+  while ((dirp = readdir(dp)) != NULL) {
+    if(string(dirp->d_name) != "." && string(dirp->d_name) != "..") {
+      files.push_back(dir + "/" + string(dirp->d_name));
+    }
+  }
+  closedir(dp);
+  return 0;
+}
+
+std::vector<std::vector<bool> > Tournament::answers(void) { // get all answers from Pages
+  std::vector<std::vector<bool> > as;
+  for(int i=0; i<pages.size(); i++) {
+    as.push_back(pages[i].answers());
+  }
+  return as;
+}
