@@ -10,7 +10,7 @@ int main(void) {
   std::cout << "Prepared" << std::endl;
   t.process();
   std::cout << "Processed" << std::endl;
-  t.report("report.csv");
+  t.report("report.dat");
   std::cout << "Reported" << std::endl;
   std::system("python ./bintonum.py");
   std::cout << "Converted to csv" << std::endl;

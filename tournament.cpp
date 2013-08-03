@@ -45,7 +45,6 @@ void Tournament::loadScans(std::vector<std::string> s, bool force) { // get name
   std::vector<std::string> loaded = readLoaded();
   int l = 0;
   int al = 0;
-  std::pair<Mat, std::string> sr;
   for(int i=0; i<s.size(); i++) {
     if(force || std::find(loaded.begin(), loaded.end(), s[i]) == loaded.end()) {
       m = imread(s[i]);
@@ -53,9 +52,8 @@ void Tournament::loadScans(std::vector<std::string> s, bool force) { // get name
       pyrDown(m, m, Size(m.cols/2, m.rows/2));
       align(m, m);
       crop(m, m);
-      sr.first = m;
-      sr.second = s[i];
-      srcs.push_back(sr);
+      srcs.push_back(m);
+      names.push_back(s[i]);
       std::cout << "Loaded " << s[i] << std::endl;
       loadfile << s[i] << std::endl;
       l++;
@@ -107,9 +105,13 @@ void Tournament::prepare(void) { // read calibration circles and add Page instan
 
   size z;
   for(int i=0; i<srcs.size(); i++) {
-    z.width = srcs[i].first.cols;
-    z.height = srcs[i].first.rows;
-    pages.push_back(Page (questions, ur, ll, srcs[i].first, sp, z, srcs[i].second));
+    std::cout << names[i] << std::endl;
+    z.width = srcs[i].cols;
+    std::cout << "one" << std::endl;
+    z.height = srcs[i].rows;
+    std::cout << "two" << std::endl;
+    pages.push_back(Page (questions, ur, ll, srcs[i], sp, z, names[i]));
+    std::cout << "here" << std::endl;
   }
   std::cout << "Added pages" << std::endl;
 }
@@ -121,7 +123,8 @@ void Tournament::process(void) { // read each Page instance
 }
 
 void Tournament::report(std::string file) { // writes read data to csv file
-  std::ofstream fout (file.c_str(), std::ios::app);
+  std::ofstream fout (file.c_str());
+  fout << "filename" << ";";
   for(int i=0; i<questions.size(); i++) {
     fout << questions[i] << ";";
   }
@@ -132,6 +135,7 @@ void Tournament::report(std::string file) { // writes read data to csv file
     if(std::find(a.begin(), a.end(), true) == a.end()) {
       std::cout << "Badness! " << file << std::endl;
     }
+    fout << pages[i].filename() << ";";
     for(int x=0; x<a.size(); x++) {
       fout << a[x] << ";";
     }

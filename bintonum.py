@@ -1,5 +1,8 @@
-f = open("report.csv", 'r')
+import os
+
+f = open("report.dat", 'r')
 lines = f.readlines()
+print lines
 f.close()
 tags = lines[0].rstrip('\n').split(';')
 
@@ -44,11 +47,18 @@ for p in [x.split(';') for x in lines[1:]]:
     pages.append(page)
     page = {}
 
-f = open("report.csv", 'w')
+if os.path.isfile("report.csv"):
+    n = False
+    f = open("report.csv", 'a')
+else:
+    n = True
+    f = open("report.csv", 'w')
+
 s = ""
-for i in newtags:
-    s += i + ";"
-s += '\n'
+if n:
+    for i in newtags:
+        s += i + ";"
+    s += '\n'
 for i in range(len(pages)):
     for x in newtags:
         s += str(pages[i][x]) + ";"
