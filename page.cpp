@@ -8,13 +8,14 @@
 
 using namespace cv;
 
-Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<point> pointsll, const Mat& src, size a, size b) { // constructor copys Mat image to variable
+Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<point> pointsll, const Mat& src, size a, size b, std::string fn) { // constructor copys Mat image to variable
   sp = a;
   page = b;
   src.copyTo(image);
   for(int i=0; i<q.size(); i++) {
     questions.push_back(Question (pointsur[i], pointsll[i], q[i]));
   }
+  fname = fn;
 }
   
 void Page::read(void) { // read all boxes and set questions' values
@@ -38,4 +39,8 @@ std::vector<bool> Page::answers(void) { // return all answers to questions
     a.push_back(questions[i].getAnswer());
   }
   return a;
+}
+
+std::string Page::filename(void) {
+  return fname;
 }

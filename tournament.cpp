@@ -45,6 +45,7 @@ void Tournament::loadScans(std::vector<std::string> s, bool force) { // get name
   std::vector<std::string> loaded = readLoaded();
   int l = 0;
   int al = 0;
+  std::pair<Mat, std::string> sr;
   for(int i=0; i<s.size(); i++) {
     if(force || std::find(loaded.begin(), loaded.end(), s[i]) == loaded.end()) {
       m = imread(s[i]);
@@ -52,7 +53,9 @@ void Tournament::loadScans(std::vector<std::string> s, bool force) { // get name
       pyrDown(m, m, Size(m.cols/2, m.rows/2));
       align(m, m);
       crop(m, m);
-      srcs.push_back(m);
+      sr.first = m;
+      sr.second = s[i];
+      srcs.push_back(sr);
       std::cout << "Loaded " << s[i] << std::endl;
       loadfile << s[i] << std::endl;
       l++;
@@ -104,9 +107,9 @@ void Tournament::prepare(void) { // read calibration circles and add Page instan
 
   size z;
   for(int i=0; i<srcs.size(); i++) {
-    z.width = srcs[i].cols;
-    z.height = srcs[i].rows;
-    pages.push_back(Page (questions, ur, ll, srcs[i], sp, z));
+    z.width = srcs[i].first.cols;
+    z.height = srcs[i].first.rows;
+    pages.push_back(Page (questions, ur, ll, srcs[i].first, sp, z, srcs[i].second));
   }
   std::cout << "Added pages" << std::endl;
 }

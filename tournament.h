@@ -25,7 +25,7 @@ class Tournament {
  private:
   std::vector<std::string> questions;
   std::vector<Page> pages;
-  std::vector<Mat> srcs;
+  std::vector<std::pair<Mat, std::string> > srcs;
   std::vector<point> ur, ll;
 };
 
