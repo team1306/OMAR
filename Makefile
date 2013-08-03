@@ -5,7 +5,7 @@ LIBS=`pkg-config opencv --libs`
 all: omar test vartest source.pdf
 
 omar: omar.o align.o tournament.o page.o question.o
-	$(CC) omar.o align.o tournament.o page.o question.o -o omar $(CFLAGS) $(LIBS)
+	$(CC) omar.o align.o tournament.o page.o question.o -o omar -g $(CFLAGS) $(LIBS)
 
 test: test.o align.o tournament.o page.o question.o
 	$(CC) test.o align.o tournament.o page.o question.o -o test $(CFLAGS) $(LIBS)
