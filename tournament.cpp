@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <dirent.h>
+#include <ios>
 #include "cv.h"
 #include "highgui.h"
 #include "tournament.h"
@@ -20,23 +21,56 @@ Tournament::Tournament(std::string dir) { // load paths to scans
   loadScans(dir);
 }
 
-void Tournament::loadScans(std::vector<std::string> s) { // get names of all scans and load Mats into vector
-  Mat m;
-  for(int i=0; i<s.size(); i++) {
-    m = imread(s[i]);
-    std::cout << "Read " << s[i] << std::endl;
-    pyrDown(m, m, Size(m.cols/2, m.rows/2));
-    align(m, m);
-    crop(m, m);
-    srcs.push_back(m);
-    std::cout << "Loaded " << s[i] << std::endl;
+std::vector<std::string> Tournament::readLoaded(void) {
+  std::ifstream loaded ("loaded.dat");
+  std::vector<std::string> files;
+  if(loaded.good()) {
+    std::string s;
+    while(!loaded.eof()) {
+      loaded >> s;
+      files.push_back(s);
+    }
+    loaded.close();
+    return files;
+  }
+  else {
+    loaded.close();
+    return files;
   }
 }
 
-void Tournament::loadScans(std::string dir) { // gets filenames from directory
+void Tournament::loadScans(std::vector<std::string> s, bool force) { // get names of all scans and load Mats into vector
+  Mat m;
+  std::ofstream loadfile ("loaded.dat", force ? std::ios::out : std::ios::app);
+  std::vector<std::string> loaded = readLoaded();
+  int l = 0;
+  int al = 0;
+  for(int i=0; i<s.size(); i++) {
+    if(force || std::find(loaded.begin(), loaded.end(), s[i]) == loaded.end()) {
+      m = imread(s[i]);
+      std::cout << "Read " << s[i] << std::endl;
+      pyrDown(m, m, Size(m.cols/2, m.rows/2));
+      align(m, m);
+      crop(m, m);
+      srcs.push_back(m);
+      std::cout << "Loaded " << s[i] << std::endl;
+      loadfile << s[i] << std::endl;
+      l++;
+    }
+    else {
+      std::cout << "Already loaded " << s[i] << std::endl;
+      al++;
+    }
+  }
+  std::cout << "Loaded " << l << " files" << std::endl;
+  std::cout << al << " files already loaded" << std::endl;
+  loadfile.close();
+}
+
+void Tournament::loadScans(std::string dir, bool force) { // gets filenames from directory
   std::vector<std::string> s;
   getDir(dir, s);
-  loadScans(s);
+  loadScans(s, force);
 }
 
 void Tournament::prepare(void) { // read calibration circles and add Page instance for each one
@@ -84,7 +118,7 @@ void Tournament::process(void) { // read each Page instance
 }
 
 void Tournament::report(std::string file) { // writes read data to csv file
-  std::ofstream fout (file.c_str());
+  std::ofstream fout (file.c_str(), std::ios::app);
   for(int i=0; i<questions.size(); i++) {
     fout << questions[i] << ";";
   }
