@@ -107,11 +107,8 @@ void Tournament::prepare(void) { // read calibration circles and add Page instan
   for(int i=0; i<srcs.size(); i++) {
     std::cout << names[i] << std::endl;
     z.width = srcs[i].cols;
-    std::cout << "one" << std::endl;
     z.height = srcs[i].rows;
-    std::cout << "two" << std::endl;
     pages.push_back(Page (questions, ur, ll, srcs[i], sp, z, names[i]));
-    std::cout << "here" << std::endl;
   }
   std::cout << "Added pages" << std::endl;
 }

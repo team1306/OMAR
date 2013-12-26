@@ -29,7 +29,7 @@ int getDir(std::string dir, std::vector<std::string> &files) {
 
 int main(int argc, char* argv[]) {
   std::vector<std::string> files;
-  getDir(argv[1], files);
+  files.push_back(argv[1]);
   std::cout << "listed files" << std::endl;
   std::string f;    
   namedWindow("circles", 1);

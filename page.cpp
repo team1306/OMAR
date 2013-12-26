@@ -21,6 +21,7 @@ Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<poin
 void Page::read(void) { // read all boxes and set questions' values
   Scalar total;
   Mat t;
+  Mat display (image);
   for(int i=0; i<questions.size(); i++) {
     t = Mat(image, Rect(Point((double(questions[i].getLL().x)/double(sp.width))*page.width, page.height - (double(questions[i].getLL().y)/double(sp.height))*page.height), Point((double(questions[i].getUR().x)/double(sp.width))*page.width, page.height - (double(questions[i].getUR().y)/double(sp.height))*page.height))); // assign a Mat to where a box should be
     total = mean(t); // finds average magnitude for the box
@@ -30,7 +31,11 @@ void Page::read(void) { // read all boxes and set questions' values
     else {
       questions[i].setAnswer(false);
     }
+    rectangle(display, Rect(Point((double(questions[i].getLL().x)/double(sp.width))*page.width, page.height - (double(questions[i].getLL().y)/double(sp.height))*page.height), Point((double(questions[i].getUR().x)/double(sp.width))*page.width, page.height - (double(questions[i].getUR().y)/double(sp.height))*page.height)), Scalar(0, 0, 255));
   }
+  namedWindow("display", 1);
+  imshow("display", display);
+  waitKey(0);
 }
 
 std::vector<bool> Page::answers(void) { // return all answers to questions

@@ -14,7 +14,7 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   cvtColor(source, gray, CV_BGR2GRAY);
   GaussianBlur(gray, gray, Size(9, 9), 2, 2);
  
-  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 1, 32, 28, 23, 5, 30);
+  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.5, 20, 15, 15, 3, 25);
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
   int a, b, c, d;
@@ -42,6 +42,15 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   real.push_back(circles[b]);
   real.push_back(circles[c]);
   real.push_back(circles[d]);
+
+  /*Mat display (gray);
+  circle(display, Point(circles[a][0], circles[a][1]), circles[a][2], Scalar(0, 0, 255));
+  circle(display, Point(circles[b][0], circles[b][1]), circles[b][2], Scalar(0, 0, 255));
+  circle(display, Point(circles[c][0], circles[c][1]), circles[c][2], Scalar(0, 0, 255));
+  circle(display, Point(circles[d][0], circles[d][1]), circles[d][2], Scalar(0, 0, 255));
+  namedWindow("display", 1);
+  imshow("display", display);
+  waitKey(0);*/
 }
 
 double getAngleOffset(vector<Vec3f> circles) {

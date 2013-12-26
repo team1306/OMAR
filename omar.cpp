@@ -14,7 +14,7 @@ int main(void) {
   std::cout << "Reported" << std::endl;
   std::system("python ./bintonum.py");
   std::cout << "Converted to csv" << std::endl;
-  std::system("python ./main.py");
+  //std::system("python ./main.py");
   std::cout << "Ranked teams" << std::endl;
   return 0;
 }
