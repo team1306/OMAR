@@ -7,10 +7,11 @@ f.close() # close file
 tags = lines[0].rstrip('\n').split(';') # strip the first tag line of newline characters and split into a list at each semicolon
 
 # initialize the variables we'll need to append to
-newtags = []
+newtags = ['filename']
 page = {} # will contain tag names and values for each line in file
 pages = []
 for p in [x.split(';') for x in lines[1:]]: # for each list representing every line after the first tag line
+    page['filename'] = p[0]
     i = 1 # initialize the incrementor. I didn't use for here since i needs to be incremented conditionally inside the loop
     while i < len(tags): # while i is still less than the length of the list of subtags
         if len(tags[i].split('.')) == 3: # if the current tag represents a multidigit number, it will have exactly 2 periods
