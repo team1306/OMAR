@@ -1,5 +1,5 @@
 #include "question.h"
-#include "cv.h"
+#include <opencv/cv.h>
 #include <string>
 #include <iostream>
 

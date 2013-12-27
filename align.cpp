@@ -1,5 +1,5 @@
-#include "cv.h"
-#include "highgui.h"
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include "align.h"
 #include <vector>
 #include <cmath>

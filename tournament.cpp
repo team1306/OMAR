@@ -5,8 +5,8 @@
 #include <string>
 #include <dirent.h>
 #include <ios>
-#include "cv.h"
-#include "highgui.h"
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include "tournament.h"
 #include "page.h"
 #include "align.h"
