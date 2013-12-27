@@ -4,8 +4,15 @@
 #include <dirent.h>
 #include "tournament.h"
 
-int main(void) {
-  Tournament t ("./scans");
+int main(int argv, char** argc) {
+  string filename;
+  if(argv == 1) {
+    filename = "./scans";
+  }
+  else {
+    filename = argc[1];
+  }
+  Tournament t (filename);
   t.prepare();
   std::cout << "Prepared" << std::endl;
   t.process();
