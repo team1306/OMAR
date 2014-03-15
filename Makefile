@@ -39,5 +39,5 @@ page.o: page.cpp
 	$(CC) -c page.cpp $(CFLAGS)
 
 clean:
-	rm -rf *.o test omar source.pdf source.aux source.pos source.cal source.log
+	rm -rf *.o vartest test omar source.pdf source.aux source.pos source.cal source.log
 
