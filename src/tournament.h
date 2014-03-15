@@ -14,8 +14,8 @@ class Tournament {
   std::vector<std::string> readLoaded(void);
   void loadScans(std::vector<std::string>, bool = 0);
   void loadScans(std::string, bool = 0);
-  void prepare(void);
-  void process(void);
+  void prepare(const std::string, const std::string);
+  void process();
   void report(std::string);
   int getDir(std::string, std::vector<std::string>&);
   std::vector<std::vector<bool> > answers(void);
