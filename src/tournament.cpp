@@ -75,9 +75,9 @@ void Tournament::loadScans(std::string dir, bool force) { // gets filenames from
   loadScans(s, force);
 }
 
-void Tournament::prepare(void) { // read calibration circles and add Page instance for each one
-  std::ifstream pos ("../tex/source.pos");
-  std::ifstream cal ("../tex/source.cal");
+void Tournament::prepare(std::string posFile, std::string calFile) { // read calibration circles and add Page instance for each one
+  std::ifstream pos (posFile);
+  std::ifstream cal (calFile);
 
   std::vector<point> circles;
   point c;
