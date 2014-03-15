@@ -11,7 +11,7 @@ int main(int argv, char** argc) {
 
   Tournament t ("./scans");
 
-  t.prepare();
+  t.prepare("", "");
   std::cout << "prepared" << std::endl;
   t.process();
   t.report("report.csv");
