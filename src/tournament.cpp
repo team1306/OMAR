@@ -51,7 +51,7 @@ void Tournament::loadScans(std::vector<std::string> s, bool force) { // get name
       std::cout << "Read " << s[i] << std::endl;
       pyrDown(m, m, Size(m.cols/2, m.rows/2));
       pyrDown(m, m, Size(m.cols/2, m.rows/2));
-      pyrDown(m, m, Size(m.cols/2, m.rows/2));
+      std::vector<Vec3f> circles;
       align(m, m);
       crop(m, m);
       srcs.push_back(m);

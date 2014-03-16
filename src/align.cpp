@@ -8,11 +8,11 @@ using namespace cv;
 
 void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   Mat gray, source;
-  source = src;
+  src.copyTo(source);
   std::vector<Vec3f> circles;
 
   cvtColor(source, gray, CV_BGR2GRAY);
-  //GaussianBlur(gray, gray, Size(9, 9), 2, 2);
+  GaussianBlur(gray, gray, Size(9, 9), 2, 2);
  
   HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.5, 20, 20, 15, 3, 20);
 
@@ -43,7 +43,8 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   real.push_back(circles[c]);
   real.push_back(circles[d]);
 
-  Mat display (source);
+  Mat display;
+  source.copyTo(display);
   circle(display, Point(circles[a][0], circles[a][1]), circles[a][2], Scalar(0, 0, 255));
   circle(display, Point(circles[b][0], circles[b][1]), circles[b][2], Scalar(0, 0, 255));
   circle(display, Point(circles[c][0], circles[c][1]), circles[c][2], Scalar(0, 0, 255));
