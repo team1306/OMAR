@@ -51,7 +51,7 @@
   \end{tikzpicture}
   #3
   \\
-  \write\mywrite{#1.#2.#3 \zposx{#1-ll} \zposy{#1-ll} \zposx{#1-ur} \zposy{#1-ur}}%
+  \write\mywrite{#1.#2.fixme \zposx{#1-ll} \zposy{#1-ll} \zposx{#1-ur} \zposy{#1-ur}}%
 }
 
 \newcommand{\caldots}[0]{%
@@ -183,11 +183,11 @@ Name and team number: \\[2em]
 \hfill
 \fbox{\begin{minipage}[t]{.25\linewidth}
 	\textbf{Information: \\[2em]}
-	\checkBox{trussshooter}{TS}{} Truss Shooter\newline
-	\checkBox{trusscatches}{TC}{} Truss Catcher\newline
-	\checkBox{automove}{AM}{}Auto Moved\newline
-	\checkBox{humanplayer}{HP}{} Balls Received from \newline Human Player\newline
-	\checkBox{disabled}{D}{} Disabled During Match
+	\checkBox{trussshooter}{TS}{Truss Shooter}\newline
+	\checkBox{trusscatches}{TC}{Truss Catcher}\newline
+	\checkBox{automove}{AM}{Auto Moved}\newline
+	\checkBox{humanplayer}{HP}{Balls Received from \newline Human Player}\newline
+	\checkBox{disabled}{D}{Disabled During Match}
 \end{minipage}
 }
 \vspace{1.5em}
