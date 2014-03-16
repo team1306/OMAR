@@ -32,9 +32,10 @@ def csvtojson(f):
         data[d['teamnumber']].append(d) # and add the data to the list
 
     dic['data'] = data # add dictionary to data tag in the main one
+    dic['teams'] = teams # add list of teams
         
 
-    return dic # convert dictionary to JSON
+    return json.dumps(dic) # convert dictionary to JSON
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
