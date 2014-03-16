@@ -41,7 +41,20 @@
   \num{#1}{9}
 }
 
-\newcommand{\checkBox}[3]{%
+\newcommand{\multiplechoice}[3]{
+  \begin{tikzpicture}[color=black]
+    \draw (0, 0)
+    node{\zsavepos{#1-ll}}
+    rectangle(3mm, 3mm)
+    node [midway, midway] {\small #2}
+    node{\zsavepos{#1-ur}};
+  \end{tikzpicture}
+  #3
+  \\
+  \write\mywrite{#1.#2.#3 \zposx{#1-ll} \zposy{#1-ll} \zposx{#1-ur} \zposy{#1-ur}}
+}
+
+\newcommand{\boolean}[3]{
   \begin{tikzpicture}[color=black]
     \draw (0, 0)
     node{\zsavepos{#1-ll}}
@@ -51,7 +64,7 @@
   \end{tikzpicture}
   #3
   \\
-  \write\mywrite{#1.#2.fixme \zposx{#1-ll} \zposy{#1-ll} \zposx{#1-ur} \zposy{#1-ur}}%
+  \write\mywrite{#1 \zposx{#1-ll} \zposy{#1-ll} \zposx{#1-ur} \zposy{#1-ur}}
 }
 
 \newcommand{\caldots}[0]{%
@@ -183,11 +196,11 @@ Name and team number: \\[2em]
 \hfill
 \fbox{\begin{minipage}[t]{.25\linewidth}
 	\textbf{Information: \\[2em]}
-	\checkBox{trussshooter.0}{TS}{Truss Shooter}\newline
-	\checkBox{trusscatches.0}{TC}{Truss Catcher}\newline
-	\checkBox{automove.0}{AM}{Auto Moved}\newline
-	\checkBox{humanplayer.0}{HP}{Balls Received from \newline Human Player}\newline
-	\checkBox{disabled.0}{D}{Disabled During Match}
+	\boolean{trussshooter}{TS}{Truss Shooter}\newline
+	\boolean{trusscatches}{TC}{Truss Catcher}\newline
+	\boolean{automove}{AM}{Auto Moved}\newline
+	\boolean{humanplayer}{HP}{Balls Received from \newline Human Player}\newline
+	\boolean{disabled}{D}{Disabled During Match}
 \end{minipage}
 }
 \vspace{1.5em}
@@ -241,27 +254,27 @@ Name and team number: \\[2em]
 \hfill
 \fbox{\begin{minipage}[t]{.12\linewidth}
 	\textbf{Hot Goals: \\[2em]}
-	\checkBox{autogoalshot.0}{0}{0}\newline
-	\checkBox{autogoalshot.1}{1}{1}\newline
-	\checkBox{autogoalshot.2}{2}{2}\newline
-	\checkBox{autogoalshot.3}{3}{3}
+	\multiplechoice{autogoalshot.0}{0}{0}\newline
+	\multiplechoice{autogoalshot.1}{1}{1}\newline
+	\multiplechoice{autogoalshot.2}{2}{2}\newline
+	\multiplechoice{autogoalshot.3}{3}{3}
 \end{minipage}
 }
 \fbox{\begin{minipage}[t]{.12\linewidth}
 	\textbf{Successful \newline Auto Goals: \\[1em]}
-	\checkBox{autogoals.0}{0}{0}\newline
-	\checkBox{autogoals.1}{1}{1}\newline
-	\checkBox{autogoals.2}{2}{2}\newline
-	\checkBox{autogoals.3}{3}{3}
+	\multiplechoice{autogoals.0}{0}{0}\newline
+	\multiplechoice{autogoals.1}{1}{1}\newline
+	\multiplechoice{autogoals.2}{2}{2}\newline
+	\multiplechoice{autogoals.3}{3}{3}
 	\vfill
 \end{minipage}
 }
 \fbox{\begin{minipage}[t]{.12\linewidth}
 	\textbf{Attempted \newline Auto Goals: \\[1em]}
-	\checkBox{autogoalsattempted.0}{0}{0}\newline
-	\checkBox{autogoalsattempted.1}{1}{1}\newline
-	\checkBox{autogoalsattempted.2}{2}{2}\newline
-	\checkBox{autogoalsattempted.3}{3}{3}
+	\multiplechoice{autogoalsattempted.0}{0}{0}\newline
+	\multiplechoice{autogoalsattempted.1}{1}{1}\newline
+	\multiplechoice{autogoalsattempted.2}{2}{2}\newline
+	\multiplechoice{autogoalsattempted.3}{3}{3}
 	\vfill
 \end{minipage}
 }
