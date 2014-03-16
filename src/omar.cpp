@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <dirent.h>
+#include <unistd.h>
 #include "tournament.h"
 
 int main(int argv, char** argc) {
@@ -57,9 +58,10 @@ int main(int argv, char** argc) {
   std::cout << "Prepared" << std::endl;
   t.process();
   std::cout << "Processed" << std::endl;
-  t.report("report.dat");
+  t.report(dataDir);
   std::cout << "Reported" << std::endl;
-  std::system("python ./src/formatting/bintonum.py");
+  chdir(dataDir.c_str());
+  std::system("python ../src/formatting/bintonum.py");
   std::cout << "Converted to csv" << std::endl;
   //std::system("python ./main.py");
   std::cout << "Ranked teams" << std::endl;

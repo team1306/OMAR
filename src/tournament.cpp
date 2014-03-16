@@ -121,7 +121,7 @@ void Tournament::process(void) { // read each Page instance
 }
 
 void Tournament::report(std::string file) { // writes read data to csv file
-  std::ofstream fout (file.c_str());
+  std::ofstream fout ((file + "/report.dat").c_str());
   fout << "filename" << ";";
   for(int i=0; i<questions.size(); i++) {
     fout << questions[i] << ";";
