@@ -14,6 +14,7 @@ for p in [x.split(';') for x in lines[1:]]: # for each list representing every l
     page['filename'] = p[0]
     i = 1 # initialize the incrementor. I didn't use for here since i needs to be incremented conditionally inside the loop
     while i < len(tags): # while i is still less than the length of the list of subtags
+        print tags[i]
         if len(tags[i].split('.')) == 3: # if the current tag represents a multidigit number, it will have exactly 2 periods
             page[tags[i].split('.')[0]] = 0 # set the value of the tag equal to zero
             tag = tags[i].split('.')[0] # set the current tag name
@@ -50,6 +51,16 @@ for p in [x.split(';') for x in lines[1:]]: # for each list representing every l
                 if p[i] == '1': # if this bubble is filled in
                     page[tags[i].split('.')[0]] = tags[i].split('.')[3] # set the value of the tag to this new value, overriding the default one
                 i += 1 # increment the variable
+
+        elif len(tags[i].split('.')) == 1: # if the tag refers to a boolean checkbox
+            tag = tags[i].split('.')[0] # set current tag name
+            if tag not in newtags: # if the tag isn't in the list, add it to new tags
+                newtags.append(tag)
+            page[tags[i].split('.')[0]] = p[i] # set the value of this tag to the boolean value read from the sheet
+            i += 1 # increment variable
+
+        elif tags[i] == '': # in case we get to a null tag, move on
+            i += 1
     pages.append(page) # append page to pages so that we can repeat the process on the next line
     page = {} # empty page
 
