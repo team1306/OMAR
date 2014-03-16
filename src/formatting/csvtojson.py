@@ -6,7 +6,7 @@ def csvtojson(f):
     lines = f.readlines() # read raw data into list
     csv = []
     for line in lines:
-        csv.append(line.replace('"', '').replace('\n', '').split(';')) # read lines of CSV into 2 x (number of tags) list ignoring quotes and newlines and spliting at semicolons
+        csv.append(line.replace('"', '').replace('\n', '').split(';')[:-1]) # read lines of CSV into 2 x (number of tags) list ignoring quotes and newlines and spliting at semicolons
 
     l = []
     for tag in csv[0]: # take only the tags that contain more than a single digit
