@@ -14,7 +14,6 @@ for p in [x.split(';') for x in lines[1:]]: # for each list representing every l
     page['filename'] = p[0]
     i = 1 # initialize the incrementor. I didn't use for here since i needs to be incremented conditionally inside the loop
     while i < len(tags): # while i is still less than the length of the list of subtags
-        print tags[i]
         if len(tags[i].split('.')) == 3: # if the current tag represents a multidigit number, it will have exactly 2 periods
             page[tags[i].split('.')[0]] = 0 # set the value of the tag equal to zero
             tag = tags[i].split('.')[0] # set the current tag name
@@ -74,11 +73,13 @@ else: # otherwise
 s = "" # initialize string that will be written to the file
 if n: # if the file is new
     for i in newtags: # add all the tag names
-        s += i + ";" # each followed by a semicolon
+        if i != '': # if tag is not empty
+            s += i + ";" # each followed by a semicolon
     s += '\n' # and then terminated by a newline character
 for i in range(len(pages)): # for every line of data
     for x in newtags: # for every tag value
-        s += str(pages[i][x]) + ";" # append the tag value followed by a semicolon
+        if x != '': # if tag is not empty
+            s += str(pages[i][x]) + ";" # append the tag value followed by a semicolon
     s += '\n' # terminated by a newline character
 f.write(s) # write string to the file. Append if there was already data there, straight write if not
 f.close() # close file
