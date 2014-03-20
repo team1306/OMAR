@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=`pkg-config opencv --cflags`
 LIBS=`pkg-config opencv --libs`
 
-all: omar test vartest
+all: omar test vartest validate
 
 omar: omar.o align.o tournament.o page.o question.o
 	$(CC) omar.o align.o tournament.o page.o question.o -o ../build/omar -g $(CFLAGS) $(LIBS)
@@ -12,6 +12,12 @@ test: test.o align.o tournament.o page.o question.o
 
 vartest: variables.cpp
 	$(CC) variables.cpp -o ../build/vartest -g $(CFLAGS) $(LIBS)
+
+validate: validation.o align.o
+	$(CC) validation.o align.o -o ../build/validate -g $(CFLAGS) $(LIBS)
+
+validation.o: validation.cpp
+	$(CC) -c validation.cpp $(CFLAGS)
 
 omar.o: omar.cpp
 	$(CC) -c omar.cpp $(CFLAGS)
