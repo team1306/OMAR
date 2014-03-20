@@ -10,6 +10,8 @@
 using namespace cv;
 
 void getCalibrationCircles(const Mat&, std::vector<Vec3f>&);
+double getAngleOffsetTop(std::vector<Vec3f>);
+double getAngleOffsetBottom(std::vector<Vec3f>);
 double getAngleOffset(std::vector<Vec3f>);
 void rotateImage(const Mat&, Mat&, double);
 void align(const Mat&, Mat&);
