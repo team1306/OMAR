@@ -14,7 +14,7 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   cvtColor(source, gray, CV_BGR2GRAY);
   GaussianBlur(gray, gray, Size(9, 9), 2, 2);
  
-  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.5, 20, 20, 15, 3, 25);
+  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.5, 20, 20, 13, 3, 25);
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
   int a, b, c, d;
@@ -78,15 +78,15 @@ void rotateImage(const Mat& source, Mat& dst, double angle) {
 void align(const Mat& source, Mat& dst) {
   std::vector<Vec3f> circles;
   getCalibrationCircles(source, circles);
-  if(std::floor(getAngleOffsetTop(circles)) != std::floor(getAngleOffsetBottom(circles))) {
-    std::cout << "Skewed" << std::endl;
-  }
   rotateImage(source, dst, getAngleOffset(circles));
 }
 
 void crop(const Mat& source, Mat& dest) {
   std::vector<Vec3f> circles;
   getCalibrationCircles(source, circles);
+  if(std::floor(getAngleOffsetTop(circles)) != std::floor(getAngleOffsetBottom(circles))) {
+    std::cout << "Skewed" << std::endl;
+  }
   Rect r (cvFloor(circles[0][0]), cvFloor(circles[0][1]), cvFloor(circles[1][0])-cvFloor(circles[0][0]), cvFloor(circles[2][1])-cvFloor(circles[0][1]));
   Mat d (source, r);
   d.copyTo(dest);
