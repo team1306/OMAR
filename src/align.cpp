@@ -14,7 +14,19 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   cvtColor(source, gray, CV_BGR2GRAY);
   GaussianBlur(gray, gray, Size(9, 9), 2, 2);
  
-  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.5, 20, 20, 13, 3, 25);
+  // was 3, 25 was 20, 13
+  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.5, gray.rows/2, 20, 10, 0, gray.rows/60);
+  /*
+    src_gray: Input image (grayscale)
+    circles: A vector that stores sets of 3 values: x_{c}, y_{c}, r for each detected circle.
+    CV_HOUGH_GRADIENT: Define the detection method. Currently this is the only one available in OpenCV
+    dp = 1: The inverse ratio of resolution
+    min_dist = src_gray.rows/8: Minimum distance between detected centers
+    param_1 = 200: Upper threshold for the internal Canny edge detector
+    param_2 = 100: Threshold for center detection.
+    min_radius = 0: Minimum radio to be detected. If unknown, put zero as default.
+    max_radius = 0: Maximum radius to be detected. If unknown, put zero as default
+  */
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
   int a, b, c, d;
