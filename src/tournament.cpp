@@ -49,8 +49,8 @@ void Tournament::loadScans(std::vector<std::string> s, bool force) { // get name
     if(force || std::find(loaded.begin(), loaded.end(), s[i]) == loaded.end()) {
       m = imread(s[i]);
       std::cout << "Read " << s[i] << std::endl;
-      pyrDown(m, m, Size(m.cols/2, m.rows/2));
-      pyrDown(m, m, Size(m.cols/2, m.rows/2));
+      // 635 x 813
+      resize(m, m, Size(635, 813), 0, 0, INTER_LINEAR);
       std::vector<Vec3f> circles;
       align(m, m);
       crop(m, m);

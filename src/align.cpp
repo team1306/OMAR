@@ -7,20 +7,15 @@
 using namespace cv;
 
 void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
-  Mat gray, source;
+  Mat source, gray;
   src.copyTo(source);
   std::vector<Vec3f> circles;
 
   cvtColor(source, gray, CV_BGR2GRAY);
   GaussianBlur(gray, gray, Size(9, 9), 2, 2);
- 
-  int upperBound = 20;
+
   // was 3, 25 was 20, 13
-  while(circles.size() < 4) {
-    HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.5, gray.rows/2, 20, 1, 0, gray.rows/60);
-    upperBound++;
-    std::cout << upperBound << " " << circles.size() << std::endl;
-  }
+  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.6, gray.rows/10, 40, 5, 0, gray.rows/60);
   /*
     src_gray: Input image (grayscale)
     circles: A vector that stores sets of 3 values: x_{c}, y_{c}, r for each detected circle.
@@ -62,10 +57,10 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
 
   Mat display;
   source.copyTo(display);
-  circle(display, Point(circles[a][0], circles[a][1]), circles[a][2], Scalar(0, 0, 255));
-  circle(display, Point(circles[b][0], circles[b][1]), circles[b][2], Scalar(0, 0, 255));
-  circle(display, Point(circles[c][0], circles[c][1]), circles[c][2], Scalar(0, 0, 255));
-  circle(display, Point(circles[d][0], circles[d][1]), circles[d][2], Scalar(0, 0, 255));
+  circle(display, Point(circles[a][0], circles[a][1]), circles[a][2], Scalar(0, 0, 255), -1, 8, 0);
+  circle(display, Point(circles[b][0], circles[b][1]), circles[b][2], Scalar(0, 0, 255), -1, 8, 0);
+  circle(display, Point(circles[c][0], circles[c][1]), circles[c][2], Scalar(0, 0, 255), -1, 8, 0);
+  circle(display, Point(circles[d][0], circles[d][1]), circles[d][2], Scalar(0, 0, 255), -1, 8, 0);
   pyrDown(display, display, Size(display.cols/2, display.rows/2));
   namedWindow("align", 1);
   imshow("align", display);
