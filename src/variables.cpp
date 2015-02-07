@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
         Mat snooker;
         cvtColor(orig, snooker, CV_RGB2GRAY);
 	GaussianBlur(snooker, snooker, Size(9, 9), 2, 2);
+	threshold(snooker, snooker, 127, 255, THRESH_BINARY);
 
         vector<Vec3f> circles;
 
