@@ -12,8 +12,8 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   std::vector<Vec3f> circles;
 
   cvtColor(source, gray, CV_BGR2GRAY);
-  threshold(gray, gray, 80, 255, THRESH_BINARY);
   GaussianBlur(gray, gray, Size(9, 9), 2, 2);
+  threshold(gray, gray, 80, 255, THRESH_BINARY);
 
   /*int hi = 25;
   while(circles.size() > 4 || circles.size() == 0) {
@@ -22,7 +22,7 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
     hi++;
     }*/
 
-  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 1.0, gray.rows/10, 20, 15, 0, gray.rows/60);
+  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 1.0, gray.rows/10, 1, 1, 0, gray.rows/60);
 
   /*
     src_gray: Input image (grayscale)
@@ -37,7 +37,7 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   */
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
-  int a, b, c, d;n
+  int a, b, c, d;
   dista = distb = distc = distd = source.cols*source.cols + source.rows*source.rows;
   for(int i=0; i<circles.size(); i++) {
     if(circles[i][0]*circles[i][0] + circles[i][1]*circles[i][1] < dista) {
