@@ -30,7 +30,7 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   */
 
   int dista, distb, distc, distd; // a is top left, b is top right, c is bottom left, d is bottom right
-  int a, b, c, d;
+  int a, b, c, d;n
   dista = distb = distc = distd = source.cols*source.cols + source.rows*source.rows;
   for(int i=0; i<circles.size(); i++) {
     if(circles[i][0]*circles[i][0] + circles[i][1]*circles[i][1] < dista) {
