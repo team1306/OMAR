@@ -15,13 +15,6 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   GaussianBlur(gray, gray, Size(9, 9), 2, 2);
   threshold(gray, gray, 80, 255, THRESH_BINARY);
 
-  /*int hi = 25;
-  while(circles.size() > 4 || circles.size() == 0) {
-    HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 1.0, gray.rows/10, hi, 10, 0, gray.rows/60);
-    std::cout << "Found " << circles.size() << " circles" << std::endl;
-    hi++;
-    }*/
-
   HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 1.0, gray.rows/10, 1, 1, 0, gray.rows/60);
 
   /*
