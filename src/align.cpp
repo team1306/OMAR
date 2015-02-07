@@ -15,7 +15,12 @@ void getCalibrationCircles(const Mat& src, vector<Vec3f>& real) {
   GaussianBlur(gray, gray, Size(9, 9), 2, 2);
 
   // was 3, 25 was 20, 13
-  HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 0.6, gray.rows/10, 40, 5, 0, gray.rows/60);
+  int hi = 35;
+  while(circles.size() > 4 || circles.size() == 0) {
+    HoughCircles(gray, circles, CV_HOUGH_GRADIENT, 1.0, gray.rows/10, hi, 10, 0, gray.rows/60);
+    std::cout << "Found " << circles.size() << " circles" << std::endl;
+    hi++;
+  }
   /*
     src_gray: Input image (grayscale)
     circles: A vector that stores sets of 3 values: x_{c}, y_{c}, r for each detected circle.
