@@ -21,14 +21,21 @@ class Database {
  public:
 
   /**
-   * Initialize database from the filenames specified. Questions are stored in
+   * Initialize database from the filename specified. Questions are stored in
    * one table and pages are stored in another.
    *
    * @param pagesfile Absolute path to the sqlite database file
-   * @param questionsfile Whether or not to attempt to create the omar table
    */
   
-  Database(std::string, std::string);
+  Database(std::string);
+
+  /**
+   * Retrieve all questions stored in the question table.
+   *
+   * @return A Question vector
+   */
+
+  std::vector<Question> getQuestions();
 
   /**
    * Get a vector of pages representing the files stored in the database.
@@ -39,10 +46,10 @@ class Database {
   std::vector<Page> getPages();
 
   /**
-   * Retrieve a page by its filename.
+   * Retrieve a page by its filename with Question vector specified.
    *
    * @param filename The name of the file to be retrieved
-   * @param questions A vector of Question associated with the page
+   * @param questions A Question vector associated with the page
    * @return A page from the database
    */
 
@@ -60,11 +67,8 @@ class Database {
 
  private:
 
-  /// SQLite database object of pages
-  SQLite::Database pagesdb;
-
-  /// SQLite database object of questions
-  SQLite::Database questionsdb;
+  /// SQLite database object
+  SQLite::Database database;
 
 };
 
