@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 #include "page.h"
+#include <SQLiteCpp/SQLiteCpp.h>
+
+#define PAGE_NOT_FOUND 20
 
 /**
  * @class Database
@@ -18,12 +21,14 @@ class Database {
  public:
 
   /**
-   * Initialize database from the filename specified.
+   * Initialize database from the filenames specified. Questions are stored in
+   * one table and pages are stored in another.
    *
-   * @param filename Absolute path to the sqlite database file
+   * @param pagesfile Absolute path to the sqlite database file
+   * @param questionsfile Whether or not to attempt to create the omar table
    */
   
-  Database(std::string);
+  Database(std::string, std::string);
 
   /**
    * Get a vector of pages representing the files stored in the database.
@@ -37,10 +42,11 @@ class Database {
    * Retrieve a page by its filename.
    *
    * @param filename The name of the file to be retrieved
+   * @param questions A vector of Question associated with the page
    * @return A page from the database
    */
 
-  Page getPage(std::string);
+  Page getPage(std::string, std::vector<Question>);
 
   /**
    * Update a file in the database based on the data stored in a Page. If the
@@ -54,8 +60,11 @@ class Database {
 
  private:
 
-  /// SQLite database object
-  sqlite3 *database;
+  /// SQLite database object of pages
+  SQLite::Database pagesdb;
+
+  /// SQLite database object of questions
+  SQLite::Database questionsdb;
 
 };
 

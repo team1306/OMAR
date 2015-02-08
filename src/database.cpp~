@@ -1,0 +1,19 @@
+#include "database.h"
+#include "page.h"
+
+#include <string>
+#include <vector>
+#include <iostream>
+#include <sqlite3.h>
+
+Database::Database(std::string filename) {
+  int rc = sqlite3_open(filename, &database);
+
+  if(rc) {
+    std::cerr << "Couldn't open database" << std::endl;
+  }
+}
+
+std::vector<Page> Database::getPages() {
+  
+}
