@@ -19,7 +19,7 @@ std::vector<Question> Database::getQuestions() {
   SQLite::Statement query (database, "SELECT * FROM questions");
 
   while(query.executeStep()) {
-    Question q (query.getColumn(1).getInt(), query.getColumn(2).getInt(), query.getColumn(3).getInt(), query.getColumen(4).getInt(), query.getColumn(5).getText());
+    Question q (query.getColumn(1).getInt(), query.getColumn(2).getInt(), query.getColumn(3).getInt(), query.getColumn(4).getInt(), query.getColumn(5).getText());
     questions.push_back(q);
   }
 
@@ -28,8 +28,21 @@ std::vector<Question> Database::getQuestions() {
 
 std::vector<Page> Database::getPages() {
   std::vector<Page> pages;
+  std::vector<Question> questions = getQuestions();
 
   SQLite::Statement query (database, "SELECT * FROM pages");
+  while(query.executeStep()) {
+    size a, b;
+    a.width = query.getColumn(2).getInt();
+    a.height = query.getColumn(3).getInt();
+    b.width = query.getColumn(4).getInt();
+    b.height = query.getColumn(5).getInt();
+    Page page (questions, imread(query.getColumn(1).getText()), a, b, query.getColumn(1).getText());
+
+    pages.push_back(page);
+  }
+
+  return pages;
 }
 
 Page Database::getPage(std::string filename, std::vector<Question> questions) {
