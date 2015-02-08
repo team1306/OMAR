@@ -11,7 +11,9 @@ using namespace cv;
 
 class Page {
  public:
+  Page(std::vector<Question>, const Mat&, size, size, std::string);
   Page(std::vector<std::string>&, std::vector<point>, std::vector<point>, const Mat&, size, size, std::string);
+  
   void read(void);
   std::vector<bool> answers(void);
   int numq(void) {return questions.size();}

@@ -8,14 +8,20 @@
 
 using namespace cv;
 
-Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<point> pointsll, const Mat& src, size a, size b, std::string fn) { // constructor copys Mat image to variable
+Page::Page(std::vector<Question> qs, const Mat& src, size a, size b, std::string fn) {
   calibrationRect = a;
   page = b;
   src.copyTo(image);
+  questions = qs;
+  fname = fn;
+}
+
+Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<point> pointsll, const Mat& src, size a, size b, std::string fn) { // constructor copys Mat image to variable
+  std::vector<Question> qs;
   for(int i=0; i<q.size(); i++) {
     questions.push_back(Question (pointsur[i], pointsll[i], q[i]));
   }
-  fname = fn;
+  Page(qs, src, a, b, fn);
 }
   
 void Page::read(void) { // read all boxes and set questions' values
