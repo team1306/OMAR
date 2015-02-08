@@ -21,7 +21,7 @@ class Tournament {
   std::vector<std::vector<bool> > answers(void);
   std::vector<point> getUR(void) {return ur;}
   std::vector<point> getLL(void) {return ll;}
-  size sp;
+  size calibrationRect;
  private:
   std::vector<std::string> questions;
   std::vector<Page> pages;
