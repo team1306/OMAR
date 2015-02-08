@@ -19,7 +19,7 @@ class Page {
  private:
   std::string fname;
   std::vector<Question> questions;
-  size sp;
+  size calibrationRect;
   size page;
   Mat image;
 };

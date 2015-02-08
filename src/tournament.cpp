@@ -86,8 +86,8 @@ void Tournament::prepare(const std::string posFile, const std::string calFile) {
     cal >> c.x >> c.y;
     circles.push_back(c);
   }
-  sp.width = circles[3].x - circles[0].x;
-  sp.height = circles[0].y - circles[1].y;
+  calibrationRect.width = circles[3].x - circles[0].x;
+  calibrationRect.height = circles[0].y - circles[1].y;
   std::cout << "Read calibration circles" << std::endl;
 
   std::string s;
@@ -110,7 +110,7 @@ void Tournament::prepare(const std::string posFile, const std::string calFile) {
     std::cout << names[i] << std::endl;
     z.width = srcs[i].cols;
     z.height = srcs[i].rows;
-    pages.push_back(Page (questions, ur, ll, srcs[i], sp, z, names[i]));
+    pages.push_back(Page (questions, ur, ll, srcs[i], calibrationRect, z, names[i]));
   }
   std::cout << "Added pages" << std::endl;
 }
