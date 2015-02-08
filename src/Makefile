@@ -1,6 +1,8 @@
 CC=g++
 CFLAGS=`pkg-config opencv --cflags`
-LIBS=`pkg-config opencv --libs`
+LIBS=`pkg-config opencv --libs` -l sqlite3
+
+SQLITE_CFLAGS=-I./../include
 
 all: omar test vartest blobtest validate
 
@@ -42,6 +44,9 @@ question.o: question.cpp
 
 page.o: page.cpp
 	$(CC) -c page.cpp $(CFLAGS)
+
+database.o: database.cpp
+	$(CC) -c database.cpp $(SQLITE_CFLAGS) $(CFLAGS)
 
 clean:
 	rm -rf *.o
