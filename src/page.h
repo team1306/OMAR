@@ -18,6 +18,8 @@ class Page {
   std::vector<bool> answers(void);
   int numq(void) {return questions.size();}
   std::string filename(void);
+  size getCalibrationSize();
+  size getPageSize();
  private:
   std::string fname;
   std::vector<Question> questions;

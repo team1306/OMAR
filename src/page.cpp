@@ -58,3 +58,11 @@ std::vector<bool> Page::answers(void) { // return all answers to questions
 std::string Page::filename(void) {
   return fname;
 }
+
+size Page::getCalibrationSize() {
+  return calibrationRect;
+}
+
+size Page::getPageSize() {
+  return page;
+}
