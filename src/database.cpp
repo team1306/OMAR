@@ -9,7 +9,7 @@
 #include <sqlite3.h>
 #include <SQLiteCpp/SQLiteCpp.h>
 
-Database::Database(std::string filename) : database(filename) {
+Database::Database(std::string filename) : database(filename, SQLITE_OPEN_READWRITE) {
   
 }
 
@@ -63,6 +63,29 @@ Page Database::getPage(std::string filename, std::vector<Question> questions) {
 }
 
 void Database::updatePage(Page update) {
-  
+  SQLite::Statement query (database, "SELECT * FROM pages WHERE filename = ?");
+  query.bind(1, update.filename());
+  int rc;
+
+  std::string filename = update.filename();
+  std::string awidth = std::to_string(update.getCalibrationSize().width);
+  std::string aheight = std::to_string(update.getCalibrationSize().height);
+  std::string bwidth = std::to_string(update.getPageSize().width);
+  std::string bheight = std::to_string(update.getPageSize().height);
+
+  if(query.executeStep()) {
+    SQLite::Transaction transaction (database);
+
+    rc = database.exec("UPDATE pages SET awidth = " + awidth + ", aheight = " + aheight + ", bwidth = " + bwidth + ", bheight = " + bheight + " WHERE filename = ?");
+    
+    transaction.commit();
+  }
+  else {
+    SQLite::Transaction transaction (database);
+    
+    rc = database.exec("INSERT INTO pages VALUES " + filename + ", " + awidth + ", " + aheight + ", " + bwidth + ", " + bheight);
+
+    transaction.commit();
+  }
 }
 
