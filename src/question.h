@@ -10,13 +10,28 @@
 
 #include <string>
 
+/**
+ * @struct point
+ * @brief A structure containing integers x and y
+ */
+
 struct point {
   int x, y;
 };
 
+/**
+ * @struct size
+ * @brief A structure containing integers width and height
+ */
+
 struct size {
   int width, height;
 };
+
+/**
+ * @struct pt
+ * @brief A structure containing doubles x and y
+ */
 
 struct pt {
   double x, y;
