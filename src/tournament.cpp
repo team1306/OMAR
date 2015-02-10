@@ -13,8 +13,8 @@
 
 using namespace cv;
 
-Tournament::Tournament(std::vector<std::string>& s) { // in case you already have the list of filenames
-  loadScans(s, true);
+Tournament::Tournament(std::vector<std::string>& files) { // in case you already have the list of filenames
+  loadScans(files, true);
 }
 
 Tournament::Tournament(std::string dir) { // load paths to scans
@@ -39,29 +39,29 @@ std::vector<std::string> Tournament::readLoaded(void) {
   }
 }
 
-void Tournament::loadScans(std::vector<std::string> s, bool force) { // get names of all scans and load Mats into vector
+void Tournament::loadScans(std::vector<std::string> files, bool force) { // get names of all scans and load Mats into vector
   Mat m;
   std::ofstream loadfile ("../data/loaded.dat", force ? std::ios::out : std::ios::app);
   std::vector<std::string> loaded = readLoaded();
   int l = 0;
   int al = 0;
-  for(int i=0; i<s.size(); i++) {
-    if(force || std::find(loaded.begin(), loaded.end(), s[i]) == loaded.end()) {
-      m = imread(s[i]);
-      std::cout << "Read " << s[i] << std::endl;
+  for(int i=0; i<files.size(); i++) {
+    if(force || std::find(loaded.begin(), loaded.end(), files[i]) == loaded.end()) {
+      m = imread(files[i]);
+      std::cout << "Read " << files[i] << std::endl;
       // 635 x 813
       resize(m, m, Size(635, 813), 0, 0, INTER_LINEAR);
       std::vector<Vec3f> circles;
       align(m, m);
       crop(m, m);
       srcs.push_back(m);
-      names.push_back(s[i]);
-      std::cout << "Loaded " << s[i] << std::endl;
-      loadfile << s[i] << std::endl;
+      names.push_back(files[i]);
+      std::cout << "Loaded " << files[i] << std::endl;
+      loadfile << files[i] << std::endl;
       l++;
     }
     else {
-      std::cout << "Already loaded " << s[i] << std::endl;
+      std::cout << "Already loaded " << files[i] << std::endl;
       al++;
     }
   }
