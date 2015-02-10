@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=`pkg-config opencv --cflags`
 LIBS=`pkg-config opencv --libs` -l sqlite3
 
-SQLITE_CFLAGS=-I./../include
+SQLITE_CFLAGS=-I./../include -std=c++11
 
 all: omar test vartest blobtest validate
 
