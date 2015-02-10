@@ -4,7 +4,7 @@ LIBS=`pkg-config opencv --libs` -l sqlite3
 
 SQLITE_CFLAGS=-I./../include -std=c++11
 
-all: omar test vartest blobtest validate
+all: omar test vartest validate
 
 omar: omar.o align.o tournament.o page.o question.o
 	$(CC) omar.o align.o tournament.o page.o question.o -o ../build/omar -g $(CFLAGS) $(LIBS)
@@ -14,9 +14,6 @@ test: test.o align.o tournament.o page.o question.o
 
 vartest: variables.cpp
 	$(CC) variables.cpp -o ../build/vartest -g $(CFLAGS) $(LIBS)
-
-blobtest: blobtest.cpp
-	$(CC) blobtest.cpp -o ../build/blobtest -g $(CFLAGS) $(LIBS)
 
 validate: validation.o align.o
 	$(CC) validation.o align.o -o ../build/validate -g $(CFLAGS) $(LIBS)
