@@ -1,6 +1,5 @@
 /**
  * @file question.h
- *
  * @brief A Question object stores information such as the text associated to the
  * question, the location of the box on the page, and the set of Questions it 
  * belongs to.
@@ -25,7 +24,6 @@ struct pt {
 
 /**
  * @class Question
- *
  * @brief A representation of a box on the page
  */
 

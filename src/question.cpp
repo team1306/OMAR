@@ -28,13 +28,13 @@ Question::Question(int a, int b, int c, int d, int width, int height, int calRec
   scale(width, height, calRectX, calRectY);
 }
 
-Question::Question(point n1, point n2, size a, size b, std::string quest) { //first size is rows/cols second size is distance between circles
+Question::Question(point n1, point n2, size pageSize, size calRect, std::string quest) { //first size is rows/cols second size is distance between circles
   ur.x = n1.x;
   ur.y = n1.y;
   ll.x = n2.x;
   ll.y = n2.y;
   q = quest;
-  scale(a, b);
+  scale(pageSize, calRect);
 }
 
 void Question::scale(int width, int height, int calRectX, int calRectY) { // scale all positions of boxes
