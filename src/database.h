@@ -1,3 +1,9 @@
+/**
+ * @file database.h
+ * @brief A wrapper class which provides abstract access to the database in term
+ * of Page objects.
+ */
+
 #ifndef __DATABASE_H__
 #define __DATABASE_H__
 
