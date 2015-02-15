@@ -37,10 +37,53 @@ void getCalibrationCircles(const Mat&, std::vector<Vec3f>&);
  */
 
 double getAngleOffsetTop(std::vector<Vec3f>);
+
+/**
+ * Find the angle in radians of the line connecting the last two points in a 
+ * vector with respect to the horizon.
+ *
+ * @param circles Vector of four points, only last two of which will be used
+ * @return The angle between the points in radians
+ */
+
 double getAngleOffsetBottom(std::vector<Vec3f>);
+
+/**
+ * Defaults to getAngleOffsetTop().
+ *
+ * @param circles Vector of four points, only first two of which will be used
+ * @return The angle between the points in radians
+ */
+
 double getAngleOffset(std::vector<Vec3f>);
+
+/**
+ * Rotate the source matrix by an angle and write it to the destination matrix.
+ *
+ * @param source Source image
+ * @param dst Destination image
+ * @param angle Angle to rotate
+ */
+
 void rotateImage(const Mat&, Mat&, double);
+
+/**
+ * Find the calibration circles and rotate the image to center the calibration
+ * rectangle.
+ *
+ * @param source Source image
+ * @param dst Destination image
+ */
+
 void align(const Mat&, Mat&);
+
+/**
+ * Find the calibration circles and crop the image to the calibration rectangle.
+ *
+ * @param source Source image
+ * @param dst Destination image
+ */
+
 void crop(const Mat&, Mat&);
 
 #endif
