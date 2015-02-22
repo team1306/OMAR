@@ -4,7 +4,7 @@ LIBS=`pkg-config opencv --libs` -l sqlite3
 
 SQLITE_CFLAGS=-I./../include -std=c++11
 
-all: omar test vartest validate
+all: omar vartest
 
 omar: omar.o align.o tournament.o page.o question.o
 	$(CC) omar.o align.o tournament.o page.o question.o -o ../build/omar -g $(CFLAGS) $(LIBS)
