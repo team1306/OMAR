@@ -37,8 +37,8 @@ int main(int argv, char** argc) {
     align(src, src);
     crop(src, src);
     
-    size sp = t.sp;
-    size page;
+    Size sp = t.sp;
+    Size page;
     page.width = src.cols;
     page.height = src.rows;
     std::vector<point> ur = t.getUR();

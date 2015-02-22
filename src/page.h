@@ -35,7 +35,7 @@ class Page {
    * @param fn The name of the source file of the image
    */
 
-  Page(std::vector<Question>, const Mat&, size, size, std::string);
+  Page(std::vector<Question>, const Mat&, Size, Size, std::string);
 
   /**
    * Process the image by reading the mean value of each Question box and 
@@ -74,7 +74,7 @@ class Page {
    * @return The size of the calibration rectangle
    */
 
-  size getCalibrationSize();
+  Size getCalibrationSize();
 
   /**
    * Get the size of the Page.
@@ -82,13 +82,13 @@ class Page {
    * @return The size of the Page
    */
 
-  size getPageSize();
+  Size getPageSize();
 
  private:
   std::string fname;
   std::vector<Question> questions;
-  size calibrationRect;
-  size page;
+  Size calibrationRect;
+  Size page;
   Mat image;
 };
 

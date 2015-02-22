@@ -140,7 +140,7 @@ class Tournament {
   std::vector<Point> getLL(void) {return ll;}
 
  private:
-  size calibrationRect;
+  Size calibrationRect;
   std::vector<std::string> questions;
   std::vector<Page> pages;
   std::vector<Mat> srcs;

@@ -9,33 +9,9 @@
 #define __QUESTION_H__
 
 #include <string>
+#include <opencv/cv.h>
 
-/**
- * @struct point
- * @brief A structure containing integers x and y
- */
-
-struct point {
-  int x, y;
-};
-
-/**
- * @struct size
- * @brief A structure containing integers width and height
- */
-
-struct size {
-  int width, height;
-};
-
-/**
- * @struct pt
- * @brief A structure containing doubles x and y
- */
-
-struct pt {
-  double x, y;
-};
+using namespace cv;
 
 /**
  * @class Question
@@ -65,7 +41,7 @@ class Question {
    * @param quest Question text
    */
 
-  Question(point, point, std::string);
+  Question(Point, Point, std::string);
 
   /**
    * Set the page position and the question text and scale the position based on 
@@ -95,7 +71,7 @@ class Question {
    * @param quest Question text
    */
 
-  Question(point, point, size, size, std::string);
+  Question(Point, Point, Size, Size, std::string);
 
   /**
    * Scale the size and position of the box given the original size of the page 
@@ -119,7 +95,7 @@ class Question {
    * @param b Size of the rectangle defined by the calibration circles
    */
 
-  void scale(size, size);
+  void scale(Size, Size);
 
   /**
    * Get the coordinate of the upper right corner of the question box.
@@ -127,7 +103,7 @@ class Question {
    * @return The upper right corner of the question box
    */
 
-  point getUR(void);
+  Point getUR(void);
 
   /**
    * Get the coordinate of the lower left corner of the question box.
@@ -135,7 +111,7 @@ class Question {
    * @return The upper lower left of the question box
    */
 
-  point getLL(void);
+  Point getLL(void);
 
   /**
    * Get the text associated with the question.

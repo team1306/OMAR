@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 
+using namespace cv;
+
 Question::Question(int a, int b, int c, int d, std::string quest) {
   ur.x = a;
   ur.y = b;
@@ -11,7 +13,7 @@ Question::Question(int a, int b, int c, int d, std::string quest) {
   q = quest;
 }
 
-Question::Question(point n1, point n2, std::string quest) {
+Question::Question(Point n1, Point n2, std::string quest) {
   ur.x = n1.x;
   ur.y = n1.y;
   ll.x = n2.x;
@@ -28,7 +30,7 @@ Question::Question(int a, int b, int c, int d, int width, int height, int calRec
   scale(width, height, calRectX, calRectY);
 }
 
-Question::Question(point n1, point n2, size pageSize, size calRect, std::string quest) { //first size is rows/cols second size is distance between circles
+Question::Question(Point n1, Point n2, Size pageSize, Size calRect, std::string quest) { //first size is rows/cols second size is distance between circles
   ur.x = n1.x;
   ur.y = n1.y;
   ll.x = n2.x;
@@ -44,24 +46,20 @@ void Question::scale(int width, int height, int calRectX, int calRectY) { // sca
   ll.y = (double(ll.y) / double(calRectY)) * height;
 }
 
-void Question::scale(size a, size b) {
+void Question::scale(Size a, Size b) {
   ur.x = (double(ur.x) / double(a.width)) * b.width;
   ur.y = (double(ur.y) / double(a.height)) * b.height;
   ll.x = (double(ll.x) / double(a.width)) * b.width;
   ll.y = (double(ll.y) / double(a.height)) * b.height;
 }
 
-point Question::getUR(void) {
-  point p;
-  p.x = cvFloor(ur.x);
-  p.y = cvFloor(ur.y);
+Point Question::getUR(void) {
+  Point p (cvFloor(ur.x), cvFloor(ur.y));
   return p;
 }
 
-point Question::getLL(void) {
-  point p;
-  p.x = cvFloor(ll.x);
-  p.y = cvFloor(ll.y);
+Point Question::getLL(void) {
+  Point p (cvFloor(ll.x), cvFloor(ll.y));
   return p;
 }
 

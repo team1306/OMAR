@@ -105,11 +105,9 @@ void Tournament::prepare(const std::string posFile, const std::string calFile) {
   }
   std::cout << "Read positions" << std::endl;
 
-  size z;
   for(int i=0; i<srcs.size(); i++) {
     std::cout << names[i] << std::endl;
-    z.width = srcs[i].cols;
-    z.height = srcs[i].rows;
+    Size z (srcs[i].cols, srcs[i].rows);
     std::vector<Question> qs;
     for(int x=0; x<questions.size(); x++) {
       qs.push_back(Question(ur[x], ll[x], questions[x]));

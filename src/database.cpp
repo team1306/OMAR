@@ -32,11 +32,8 @@ std::vector<Page> Database::getPages() {
 
   SQLite::Statement query (database, "SELECT * FROM pages");
   while(query.executeStep()) {
-    size a, b;
-    a.width = query.getColumn(2).getInt();
-    a.height = query.getColumn(3).getInt();
-    b.width = query.getColumn(4).getInt();
-    b.height = query.getColumn(5).getInt();
+    Size a (query.getColumn(2).getInt(), query.getColumn(3).getInt());
+    Size b (query.getColumn(4).getInt(), query.getColumn(5).getInt());
     Page page (questions, imread(query.getColumn(1).getText()), a, b, query.getColumn(1).getText());
 
     pages.push_back(page);
@@ -49,11 +46,8 @@ Page Database::getPage(std::string filename, std::vector<Question> questions) {
   SQLite::Statement query (database, "SELECT * FROM pages WHERE filename = ?");
   query.bind(1, filename);
   if(query.executeStep()) {
-    size a, b;
-    a.width = query.getColumn(2).getInt();
-    a.height = query.getColumn(3).getInt();
-    b.width = query.getColumn(4).getInt();
-    b.height = query.getColumn(5).getInt();
+    Size a (query.getColumn(2).getInt(), query.getColumn(3).getInt());
+    Size b (query.getColumn(4).getInt(), query.getColumn(5).getInt());
     Page page (questions, imread(query.getColumn(1).getText()), a, b, query.getColumn(1).getText());
     return page;
   }

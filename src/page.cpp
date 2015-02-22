@@ -8,7 +8,7 @@
 
 using namespace cv;
 
-Page::Page(std::vector<Question> qs, const Mat& src, size a, size b, std::string fn) {
+Page::Page(std::vector<Question> qs, const Mat& src, Size a, Size b, std::string fn) {
   calibrationRect = a;
   page = b;
   src.copyTo(image);
@@ -60,10 +60,12 @@ std::string Page::filename(void) {
   return fname;
 }
 
-size Page::getCalibrationSize() {
-  return calibrationRect;
+Size Page::getCalibrationSize() {
+  Size ret (calibrationRect);
+  return ret;
 }
 
-size Page::getPageSize() {
-  return page;
+Size Page::getPageSize() {
+  Size ret (page);
+  return ret;
 }
