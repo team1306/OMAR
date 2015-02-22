@@ -15,21 +15,22 @@ Page::Page(std::vector<Question> qs, const Mat& src, size a, size b, std::string
   questions = qs;
   fname = fn;
 }
-
-Page::Page(std::vector<string>& q, std::vector<point> pointsur, std::vector<point> pointsll, const Mat& src, size a, size b, std::string fn) { // constructor copys Mat image to variable
-  std::vector<Question> qs;
-  for(int i=0; i<q.size(); i++) {
-    questions.push_back(Question (pointsur[i], pointsll[i], q[i]));
-  }
-  Page(qs, src, a, b, fn);
-}
   
 void Page::read(void) { // read all boxes and set questions' values
+  std::cout << "here" << std::endl;
+  std::cout << fname << std::endl;
+  std::cout << image.cols << std::endl;
+  std::cout << image.rows << std::endl << std::endl;
   Scalar total;
   Mat t;
-  Mat display (image);
+  Mat display;
+  image.copyTo(display);
+
   for(int i=0; i<questions.size(); i++) {
     questions[i].scale(calibrationRect, page);
+    std::cout << questions.size() << std::endl;
+    std::cout << questions[i].getLL().x << std::endl;
+    std::cout << page.height - questions[i].getUR().y << std::endl << std::endl;
     Point topLeftCorner (questions[i].getLL().x, page.height - questions[i].getUR().y);
     Point bottomRightCorner (questions[i].getUR().x, page.height - questions[i].getLL().y);
     t = image(Rect(topLeftCorner, bottomRightCorner)); // assign a Mat to where a box should be

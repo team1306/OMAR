@@ -8,8 +8,8 @@
 
 #include <vector>
 #include <string>
-#include "cv.h"
-#include "highgui.h"
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include "page.h"
 
 /**
@@ -128,7 +128,7 @@ class Tournament {
    * @return A point vector of the upper right corners of the question boxes
    */
 
-  std::vector<point> getUR(void) {return ur;}
+  std::vector<Point> getUR(void) {return ur;}
 
   /**
    * Get the points of the lower left corners of the question boxes associated
@@ -137,7 +137,7 @@ class Tournament {
    * @return A point vector of the lower left corners of the question boxes
    */
 
-  std::vector<point> getLL(void) {return ll;}
+  std::vector<Point> getLL(void) {return ll;}
 
  private:
   size calibrationRect;
@@ -145,7 +145,7 @@ class Tournament {
   std::vector<Page> pages;
   std::vector<Mat> srcs;
   std::vector<std::string> names;
-  std::vector<point> ur, ll;
+  std::vector<Point> ur, ll;
 };
 
 #endif

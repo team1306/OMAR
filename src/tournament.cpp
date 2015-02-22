@@ -80,8 +80,8 @@ void Tournament::prepare(const std::string posFile, const std::string calFile) {
   std::ifstream pos (posFile.c_str());
   std::ifstream cal (calFile.c_str());
 
-  std::vector<point> circles;
-  point c;
+  std::vector<Point> circles;
+  Point c;
   for(int i=0; i<4; i++) {
     cal >> c.x >> c.y;
     circles.push_back(c);
@@ -92,7 +92,7 @@ void Tournament::prepare(const std::string posFile, const std::string calFile) {
 
   std::string s;
   int x, y;
-  point a, b;
+  Point a, b;
   while(!pos.eof()) {
     pos >> s >> a.x >> a.y >> b.x >> b.y;
     a.x -= circles[1].x;
@@ -110,13 +110,19 @@ void Tournament::prepare(const std::string posFile, const std::string calFile) {
     std::cout << names[i] << std::endl;
     z.width = srcs[i].cols;
     z.height = srcs[i].rows;
-    pages.push_back(Page (questions, ur, ll, srcs[i], calibrationRect, z, names[i]));
+    std::vector<Question> qs;
+    for(int x=0; x<questions.size(); x++) {
+      qs.push_back(Question(ur[x], ll[x], questions[x]));
+    }
+    pages.push_back(Page (qs, srcs[i], calibrationRect, z, names[i]));
   }
   std::cout << "Added pages" << std::endl;
 }
 
 void Tournament::process(void) { // read each Page instance
+  std::cout << "page count: " << pages.size() << std::endl;
   for(int i=0; i<pages.size(); i++) {
+    std::cout << "filename: " << pages[i].filename() << std::endl;
     pages[i].read();
   }
 }

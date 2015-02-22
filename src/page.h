@@ -8,8 +8,8 @@
 
 #include <string>
 #include <vector>
-#include "cv.h"
-#include "highgui.h"
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include "question.h"
 
 using namespace cv;
@@ -36,20 +36,6 @@ class Page {
    */
 
   Page(std::vector<Question>, const Mat&, size, size, std::string);
-
-  /**
-   * Store the image and the metadata in member variables.
-   *
-   * @param q A vector of the names of the questions
-   * @param pointsur A vector of upper right points of the question boxes
-   * @param pointsll A vector of lower left points of the question boxes
-   * @param src The source image
-   * @param a The size of the calibration rectangle
-   * @param b The size of the page
-   * @param fn The name of the source file of the image
-   */
-
-  Page(std::vector<std::string>&, std::vector<point>, std::vector<point>, const Mat&, size, size, std::string);
 
   /**
    * Process the image by reading the mean value of each Question box and 
