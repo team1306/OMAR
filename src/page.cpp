@@ -17,10 +17,6 @@ Page::Page(std::vector<Question> qs, const Mat& src, Size a, Size b, std::string
 }
   
 void Page::read(void) { // read all boxes and set questions' values
-  std::cout << "here" << std::endl;
-  std::cout << fname << std::endl;
-  std::cout << image.cols << std::endl;
-  std::cout << image.rows << std::endl << std::endl;
   Scalar total;
   Mat t;
   Mat display;
@@ -28,9 +24,6 @@ void Page::read(void) { // read all boxes and set questions' values
 
   for(int i=0; i<questions.size(); i++) {
     questions[i].scale(calibrationRect, page);
-    std::cout << questions.size() << std::endl;
-    std::cout << questions[i].getLL().x << std::endl;
-    std::cout << page.height - questions[i].getUR().y << std::endl << std::endl;
     Point topLeftCorner (questions[i].getLL().x, page.height - questions[i].getUR().y);
     Point bottomRightCorner (questions[i].getUR().x, page.height - questions[i].getLL().y);
     t = image(Rect(topLeftCorner, bottomRightCorner)); // assign a Mat to where a box should be
