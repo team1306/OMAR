@@ -148,7 +148,7 @@ Name and team number: \\[2em]
 
 \noindent\begin{minipage}[t]{.15\linewidth}
 \begin{center}
-  \textbf{Team Number: \newline}
+  \textbf{Team Number: \newline \newline}
   \begin{multicols}{4}
     \digit{teamnumber.1000}\columnbreak
     \digit{teamnumber.100}\columnbreak
@@ -164,7 +164,7 @@ Name and team number: \\[2em]
 %
 \begin{minipage}[t]{.1\linewidth}
 \begin{center}
-  \textbf{Round Number:}
+  \textbf{Round Number: \newline}
   \begin{multicols}{2}
     \digit{roundnumber.10}\columnbreak
     \digit{roundnumber.1}
@@ -173,26 +173,96 @@ Name and team number: \\[2em]
 \end{minipage}
 %
 \hfill
-%
-\fbox{\begin{minipage}[t]{.25\linewidth}
-    \textbf{Capabilities: \\[2em]}
-    \boolean{totepickup}{UP}{Tote pickup}\newline
-    \boolean{totestack}{ST}{Stacks}\newline
-    \boolean{binpickup}{BN}{Bin pickup}\newline
-    \boolean{autototes}{AU}{Auto totes}
-    \end{minipage}
-}
-%
+\vrule{}
 \hfill
 %
 \begin{minipage}[t]{.12\linewidth}
 \begin{center}
-  \textbf{Level 1 totes:}
+  \textbf{Totes stacked in auto:}
   \begin{multicols}{2}
     \digit{levelonetotes.10}\columnbreak
     \digit{levelonetotes.1}
   \end{multicols}
 \end{center}
 \end{minipage}
-
+%
+\hfill
+%
+\fbox{\begin{minipage}[t]{.25\linewidth}
+    \textbf{Auto capabilities: \\[2em]}
+    \boolean{autototes}{AU}{Auto stacks}\newline
+    \boolean{mobile}{MO}{Mobile}\newline
+    \boolean{movesbins}{MC}{Moves bins}\newline
+    \boolean{cansfromstep}{CS}{Cans from step}
+    \end{minipage}
+}
+%
+\vspace{1.5em}
+\\
+%
+\hfill
+%
+\noindent\begin{minipage}[t]{.12\linewidth}
+\begin{center}
+  \textbf{Totes stacked:}
+  \begin{multicols}{2}
+    \digit{totesstacked.10}\columnbreak
+    \digit{totesstacked.1}
+  \end{multicols}
+\end{center}
+\end{minipage}
+%
+\hfill
+\vrule{}
+\hfill
+%
+\begin{minipage}[t]{.12\linewidth}
+\begin{center}
+  \textbf{Max tote height: \newline \newline}
+  \digit{toteheight.1}
+\end{center}
+\end{minipage}
+%
+\hfill
+\vrule{}
+\hfill
+%
+\begin{minipage}[t]{.12\linewidth}
+\begin{center}
+  \textbf{Max bin height: \newline \newline}
+  \digit{binheight.1}
+\end{center}
+\end{minipage}
+%
+\hfill
+%
+\fbox{\begin{minipage}[t]{.25\linewidth}
+    \textbf{Human player quality: \\[2em]}
+    \multiplechoice{humanplayer.0}{0}{<50\% accurate (terrible)}\newline
+    \multiplechoice{humanplayer.1}{1}{~50\% accurate (mediocre)}\newline
+    \multiplechoice{humanplayer.2}{2}{>50\% accurate (stellar)}
+    \end{minipage}
+}
+%
+\hfill
+%
+\fbox{\begin{minipage}[t]{.25\linewidth}
+    \textbf{Teleop capabilities: \\[2em]}
+    \boolean{binstack}{BS}{Stacks bins}\newline
+    \boolean{litterins}{LI}{Inserts litter}\newline
+    \boolean{chuteload}{CL}{Loads from chute}
+    \end{minipage}
+}
+%
+\vspace{1.5em}
+%
+\begin{center}
+\noindent\fbox{
+	\begin{minipage}{.95\linewidth}Notes: \\[4em]
+	\end{minipage}
+}
+\end{center}
+%
+\vspace{1.5em}
+%
 \end{document}
