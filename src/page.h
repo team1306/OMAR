@@ -84,7 +84,67 @@ class Page {
 
   Size getPageSize();
 
+  /**
+   * Find the calibration circles and rotate the image to center the calibration
+   * rectangle.
+   */
+
+  void align();
+
+  /**
+   * Find the calibration circles and crop the image to the calibration rectangle.
+   */
+
+  void crop();
+
  private:
+  /**
+   * Read an image and write the four strongest circles closest to the corners 
+   * to the output vector of points.
+   *
+   * @param real Output vector containing the coordinates of the calibration 
+   * circles
+   */
+
+  void getCalibrationCircles(std::vector<Vec3f>&);
+
+  /**
+   * Find the angle in radians of the line connecting the first two points in a 
+   * vector with respect to the horizon.
+   *
+   * @param circles Vector of four points, only first two of which will be used
+   * @return The angle between the points in radians
+   */
+
+  double getAngleOffsetTop(std::vector<Vec3f>);
+
+  /**
+   * Find the angle in radians of the line connecting the last two points in a 
+   * vector with respect to the horizon.
+   *
+   * @param circles Vector of four points, only last two of which will be used
+   * @return The angle between the points in radians
+   */
+
+  double getAngleOffsetBottom(std::vector<Vec3f>);
+
+  /**
+   * Defaults to getAngleOffsetTop().
+   *
+   * @param circles Vector of four points, only first two of which will be used
+   * @return The angle between the points in radians
+   */
+
+  double getAngleOffset(std::vector<Vec3f>);
+
+  /**
+   * Rotate the source matrix by an angle and write it to the destination matrix.
+   *
+   * @param angle Angle to rotate
+   */
+
+  void rotateImage(double);
+
   std::string fname;
   std::vector<Question> questions;
   Size calibrationRect;
