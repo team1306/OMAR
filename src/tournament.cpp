@@ -13,12 +13,14 @@
 
 using namespace cv;
 
-Tournament::Tournament(std::vector<std::string>& files) { // in case you already have the list of filenames
-  loadScans(files, true);
+Tournament::Tournament(std::vector<std::string>& files, std::string posFile, std::string calFile) { // in case you already have the list of filenames
+  prepare(files, posFile, calFile);
 }
 
-Tournament::Tournament(std::string dir) { // load paths to scans
-  loadScans(dir, true);
+Tournament::Tournament(std::string dir, std::string posFile, std::string calFile) { // load paths to scans
+  std::vector<std::string> files;
+  getDir(dir, files);
+  prepare(files, posFile, calFile);
 }
 
 std::vector<std::string> Tournament::readLoaded(void) {
@@ -39,44 +41,8 @@ std::vector<std::string> Tournament::readLoaded(void) {
   }
 }
 
-void Tournament::loadScans(std::vector<std::string> files, bool force) { // get names of all scans and load Mats into vector
-  Mat m;
-  std::ofstream loadfile ("../data/loaded.dat", force ? std::ios::out : std::ios::app);
-  std::vector<std::string> loaded = readLoaded();
-  int l = 0;
-  int al = 0;
-  for(int i=0; i<files.size(); i++) {
-    if(force || std::find(loaded.begin(), loaded.end(), files[i]) == loaded.end()) {
-      m = imread(files[i]);
-      std::cout << "Read " << files[i] << std::endl;
-      // 635 x 813
-      resize(m, m, Size(635, 813), 0, 0, INTER_LINEAR);
-      std::vector<Vec3f> circles;
-      align(m, m);
-      crop(m, m);
-      srcs.push_back(m);
-      names.push_back(files[i]);
-      std::cout << "Loaded " << files[i] << std::endl;
-      loadfile << files[i] << std::endl;
-      l++;
-    }
-    else {
-      std::cout << "Already loaded " << files[i] << std::endl;
-      al++;
-    }
-  }
-  std::cout << "Loaded " << l << " files" << std::endl;
-  std::cout << al << " files already loaded" << std::endl;
-  loadfile.close();
-}
-
-void Tournament::loadScans(std::string dir, bool force) { // gets filenames from directory
-  std::vector<std::string> s;
-  getDir(dir, s);
-  loadScans(s, force);
-}
-
-void Tournament::prepare(const std::string posFile, const std::string calFile) { // read calibration circles and add Page instance for each one
+void Tournament::prepare(std::vector<std::string> files, const std::string posFile, const std::string calFile) { // read calibration circles and add Page instance for each one
+  std::cout << posFile << std::endl;
   std::ifstream pos (posFile.c_str());
   std::ifstream cal (calFile.c_str());
 
@@ -105,14 +71,23 @@ void Tournament::prepare(const std::string posFile, const std::string calFile) {
   }
   std::cout << "Read positions" << std::endl;
 
-  for(int i=0; i<srcs.size(); i++) {
-    std::cout << names[i] << std::endl;
-    Size z (srcs[i].cols, srcs[i].rows);
+  Mat m;
+  for(int i=0; i<files.size(); i++) {
+    std::cout << files[i] << std::endl;
+    
+    m = imread(files[i]);
+    std::cout << "Read " << files[i] << std::endl;
+    // 635 x 813
+    resize(m, m, Size(635, 813), 0, 0, INTER_LINEAR);
+    names.push_back(files[i]);
+
     std::vector<Question> qs;
     for(int x=0; x<questions.size(); x++) {
       qs.push_back(Question(ur[x], ll[x], questions[x]));
     }
-    pages.push_back(Page (qs, srcs[i], calibrationRect, z, names[i]));
+    pages.push_back(Page (qs, m, calibrationRect, m.size(), names[i]));
+    pages[pages.size() - 1].align();
+    pages[pages.size() - 1].crop();
   }
   std::cout << "Added pages" << std::endl;
 }

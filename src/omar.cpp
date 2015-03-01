@@ -53,8 +53,7 @@ int main(int argv, char** argc) {
     std::cout << "Missing data directory (-d)" << std::endl;
     return 1;
   }
-  Tournament t (scansDir);
-  t.prepare(posFile, calFile);
+  Tournament t (scansDir, posFile, calFile);
   std::cout << "Prepared" << std::endl;
   t.process();
   std::cout << "Processed" << std::endl;

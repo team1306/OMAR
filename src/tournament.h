@@ -29,17 +29,21 @@ class Tournament {
    *
    * @param files Vector of filename strings relative to the directory of 
    * execution
+   * @param posFile Path to .pos file
+   * @param calFile Path to .cal file
    */
 
-  Tournament(std::vector<std::string>&);
+  Tournament(std::vector<std::string>&, std::string, std::string);
 
   /**
    * Initialize a Tournament with a directory in which to find the image files.
    *
    * @param dir The path to the directory containing the images
+   * @param posFile Path to .pos file
+   * @param calFile Path to .cal file
    */
 
-  Tournament(std::string);
+  Tournament(std::string, std::string, std::string);
 
   /**
    * Read which files have already been processed from loaded.dat
@@ -52,37 +56,15 @@ class Tournament {
   std::vector<std::string> readLoaded(void);
 
   /**
-   * Load the files listed in a vector into memory, ignoring those returned by 
-   * readLoaded(). However, if force specified, it loads every file it can find.
-   *
-   * @param files A vector of files to load into memory
-   * @param force Whether or not to ignore which files have already been loaded
-   * (defaults to false)
-   */
-
-  void loadScans(std::vector<std::string>, bool = 0);
-
-  /**
-   * Load the files in the specified directory into memory, ignoring those 
-   * returned by readLoaded(). However, if force specified, it loads every file 
-   * it can find.
-   *
-   * @param dir The directory containing the image files
-   * @param force Whether or not to ignore which files have already been loaded
-   * (defaults to false)
-   */
-
-  void loadScans(std::string, bool = 0);
-
-  /**
    * Run the preprocessing method on every Page according to the data contained
    * in the specified .cal and .pos files.
    *
+   * @param files Pathes to images to load
    * @param posFile Path to the .pos file
    * @param calFile Path to the .cal file
    */
 
-  void prepare(const std::string, const std::string);
+  void prepare(std::vector<std::string>, const std::string, const std::string);
 
   /**
    * Run the processing method on every Page to extract the information from the
