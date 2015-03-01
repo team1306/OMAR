@@ -6,17 +6,17 @@ SQLITE_CFLAGS=-I./../include -std=c++11
 
 all: omar vartest
 
-omar: omar.o align.o tournament.o page.o question.o
-	$(CC) omar.o align.o tournament.o page.o question.o -o ../build/omar -g $(CFLAGS) $(LIBS)
+omar: omar.o tournament.o page.o question.o
+	$(CC) omar.o tournament.o page.o question.o -o ../build/omar -g $(CFLAGS) $(LIBS)
 
-test: test.o align.o tournament.o page.o question.o
-	$(CC) test.o align.o tournament.o page.o question.o -o ../build/test $(CFLAGS) $(LIBS)
+test: test.o  tournament.o page.o question.o
+	$(CC) test.o  tournament.o page.o question.o -o ../build/test $(CFLAGS) $(LIBS)
 
 vartest: variables.cpp
 	$(CC) variables.cpp -o ../build/vartest -g $(CFLAGS) $(LIBS)
 
-validate: validation.o align.o
-	$(CC) validation.o align.o -o ../build/validate -g $(CFLAGS) $(LIBS)
+validate: validation.o 
+	$(CC) validation.o  -o ../build/validate -g $(CFLAGS) $(LIBS)
 
 validation.o: validation.cpp
 	$(CC) -c validation.cpp $(CFLAGS)
@@ -32,9 +32,6 @@ test.o: test.cpp
 
 tournament.o: tournament.cpp
 	$(CC) -c tournament.cpp $(CFLAGS)
-
-align.o: align.cpp
-	$(CC) -c align.cpp $(CFLAGS)
 
 question.o: question.cpp
 	$(CC) -c question.cpp $(CFLAGS)
