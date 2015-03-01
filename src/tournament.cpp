@@ -9,7 +9,6 @@
 #include <opencv/highgui.h>
 #include "tournament.h"
 #include "page.h"
-#include "align.h"
 
 using namespace cv;
 

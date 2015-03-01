@@ -1,6 +1,5 @@
 #include "cv.h"
 #include "highgui.h"
-#include "align.h"
 #include "page.h"
 #include "tournament.h"
 #include <iostream>
