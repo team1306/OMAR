@@ -137,7 +137,7 @@ class Question {
 
   bool getAnswer(void) {return answer;}
  private:
-  pt ur, ll;
+  Point ur, ll;
   std::string q;
   bool answer;
 };
