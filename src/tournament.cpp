@@ -62,23 +62,29 @@ void Tournament::prepare(std::vector<std::string> files, const std::string posFi
   }
   std::cout << "Read positions" << std::endl;
 
+  std::vector<std::string> filenames = readLoaded();
+
   Mat m;
   for(int i=0; i<files.size(); i++) {
-    std::cout << files[i] << std::endl;
     
-    m = imread(files[i]);
-    std::cout << "Read " << files[i] << std::endl;
-    // 635 x 813
-    resize(m, m, Size(635, 813), 0, 0, INTER_LINEAR);
-    names.push_back(files[i]);
+    if(std::find(filenames.begin(), filenames.end(), files[i]) == filenames.end()) {
+      m = imread(files[i]);
+      std::cout << "Read " << files[i] << std::endl;
+      // 635 x 813
+      resize(m, m, Size(635, 813), 0, 0, INTER_LINEAR);
+      names.push_back(files[i]);
 
-    std::vector<Question> qs;
-    for(int x=0; x<questions.size(); x++) {
-      qs.push_back(Question(ur[x], ll[x], questions[x]));
+      std::vector<Question> qs;
+      for(int x=0; x<questions.size(); x++) {
+	qs.push_back(Question(ur[x], ll[x], questions[x]));
+      }
+      pages.push_back(Page (qs, m, calibrationRect, m.size(), names[i]));
+      pages[pages.size() - 1].align();
+      pages[pages.size() - 1].crop();
     }
-    pages.push_back(Page (qs, m, calibrationRect, m.size(), names[i]));
-    pages[pages.size() - 1].align();
-    pages[pages.size() - 1].crop();
+    else {
+      std::cout << "Already read " << files[i] << std::endl;
+    }
   }
   std::cout << "Added pages" << std::endl;
 }
