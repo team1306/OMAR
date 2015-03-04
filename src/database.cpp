@@ -57,9 +57,6 @@ Page Database::getPage(std::string filename, std::vector<Question> questions) {
 }
 
 void Database::updatePage(Page update) {
-  SQLite::Statement query (database, "SELECT * FROM pages WHERE filename = ?");
-  query.bind(1, update.filename());
-  int rc;
 
   std::string filename = update.filename();
   std::string awidth = std::to_string(update.getCalibrationSize().width);
@@ -67,17 +64,20 @@ void Database::updatePage(Page update) {
   std::string bwidth = std::to_string(update.getPageSize().width);
   std::string bheight = std::to_string(update.getPageSize().height);
 
+  SQLite::Statement query (database, "SELECT * FROM pages WHERE filename = '" + filename + "';");
+  int rc;
+
   if(query.executeStep()) {
     SQLite::Transaction transaction (database);
 
-    rc = database.exec("UPDATE pages SET awidth = " + awidth + ", aheight = " + aheight + ", bwidth = " + bwidth + ", bheight = " + bheight + " WHERE filename = ?");
+    rc = database.exec("UPDATE pages SET calrectx = " + awidth + ", calrecty = " + aheight + ", pagesizex = " + bwidth + ", pagesizey = " + bheight + " WHERE filename = '" + filename + "';");
     
     transaction.commit();
   }
   else {
     SQLite::Transaction transaction (database);
     
-    rc = database.exec("INSERT INTO pages VALUES " + filename + ", " + awidth + ", " + aheight + ", " + bwidth + ", " + bheight);
+    rc = database.exec("INSERT INTO pages VALUES ('" + filename + "', " + awidth + ", " + aheight + ", " + bwidth + ", " + bheight + ");");
 
     transaction.commit();
   }
