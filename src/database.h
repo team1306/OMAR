@@ -16,12 +16,12 @@
 
 /*
  * questions database
- * ur.x | ur.y | ll.x | ll.y | question text
+ * urx | ury | llx | lly | question text
  */
 
 /*
  * pages database
- * filename | calrect.x | calrect.y | pagesize.x | pagesize.y
+ * filename | calrectx | calrecty | pagesizex | pagesizey
  */
 
 /**
