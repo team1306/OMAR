@@ -10,9 +10,19 @@
 #include <string>
 #include <vector>
 #include "page.h"
-#include <SQLiteCpp/SQLiteCpp.h>
+#include "SQLiteCpp/SQLiteCpp.h"
 
 #define PAGE_NOT_FOUND 20
+
+/*
+ * questions database
+ * ur.x | ur.y | ll.x | ll.y | question text
+ */
+
+/*
+ * pages database
+ * filename | calrect.x | calrect.y | pagesize.x | pagesize.y
+ */
 
 /**
  * @class Database
