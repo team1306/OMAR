@@ -92,8 +92,9 @@ void Tournament::prepare(std::vector<std::string> files, const std::string posFi
 void Tournament::process(void) { // read each Page instance
   std::cout << "page count: " << pages.size() << std::endl;
   for(int i=0; i<pages.size(); i++) {
-    std::cout << "filename: " << pages[i].filename() << std::endl;
+    std::cout << "Processing " << pages[i].filename() << std::endl;
     pages[i].read();
+    database.updatePage(pages[i]);
   }
 }
 
@@ -116,6 +117,7 @@ void Tournament::report(std::string file) { // writes read data to csv file
     }
     fout << std::endl;
   }
+  fout.close();
 }
 
 int Tournament::getDir(std::string dir, std::vector<std::string> &files) { // gets filenames from directory path
