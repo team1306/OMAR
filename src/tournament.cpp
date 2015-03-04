@@ -24,21 +24,12 @@ Tournament::Tournament(std::string dir, std::string posFile, std::string calFile
 }
 
 std::vector<std::string> Tournament::readLoaded(void) {
-  std::ifstream loaded ("../data/loaded.dat");
-  std::vector<std::string> files;
-  if(loaded.good()) {
-    std::string s;
-    while(!loaded.eof()) {
-      loaded >> s;
-      files.push_back(s);
-    }
-    loaded.close();
-    return files;
+  std::vector<std::string> filenames;
+  std::vector<Page> pages = database.getPages();
+  for(int i=0; i<pages.size(); i++) {
+    filenames.push_back(pages[i].filename());
   }
-  else {
-    loaded.close();
-    return files;
-  }
+  return filenames;
 }
 
 void Tournament::prepare(std::vector<std::string> files, const std::string posFile, const std::string calFile) { // read calibration circles and add Page instance for each one
