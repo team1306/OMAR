@@ -11,6 +11,7 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include "page.h"
+#include "database.h"
 
 /**
  * @class Tournament
@@ -31,9 +32,10 @@ class Tournament {
    * execution
    * @param posFile Path to .pos file
    * @param calFile Path to .cal file
+   * @param datFile Path to the scans database
    */
 
-  Tournament(std::vector<std::string>&, std::string, std::string);
+  Tournament(std::vector<std::string>&, std::string, std::string, std::string);
 
   /**
    * Initialize a Tournament with a directory in which to find the image files.
@@ -41,9 +43,10 @@ class Tournament {
    * @param dir The path to the directory containing the images
    * @param posFile Path to .pos file
    * @param calFile Path to .cal file
+   * @param datFile Path to the scans database
    */
 
-  Tournament(std::string, std::string, std::string);
+  Tournament(std::string, std::string, std::string, std::string);
 
   /**
    * Read which files have already been processed from loaded.dat
@@ -128,6 +131,7 @@ class Tournament {
   std::vector<Mat> srcs;
   std::vector<std::string> names;
   std::vector<Point> ur, ll;
+  Database database;
 };
 
 #endif

@@ -9,14 +9,15 @@
 #include <opencv/highgui.h>
 #include "tournament.h"
 #include "page.h"
+#include "database.h"
 
 using namespace cv;
 
-Tournament::Tournament(std::vector<std::string>& files, std::string posFile, std::string calFile) { // in case you already have the list of filenames
+Tournament::Tournament(std::vector<std::string>& files, std::string posFile, std::string calFile, std::string datFile) : database(datFile) {
   prepare(files, posFile, calFile);
 }
 
-Tournament::Tournament(std::string dir, std::string posFile, std::string calFile) { // load paths to scans
+Tournament::Tournament(std::string dir, std::string posFile, std::string calFile, std::string datFile) : database(datFile) { 
   std::vector<std::string> files;
   getDir(dir, files);
   prepare(files, posFile, calFile);

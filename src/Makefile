@@ -1,22 +1,23 @@
 CC=g++
-CFLAGS=`pkg-config opencv --cflags`
+CFLAGS=`pkg-config opencv --cflags` -I./../include -std=c++11
 LIBS=`pkg-config opencv --libs` -l sqlite3
-
-SQLITE_CFLAGS=-I./../include -std=c++11
 
 all: omar vartest
 
-omar: omar.o tournament.o page.o question.o
-	$(CC) omar.o tournament.o page.o question.o -o ../build/omar -g $(CFLAGS) $(LIBS)
+omar: omar.o tournament.o page.o question.o database.o SQLiteCpp
+	$(CC) omar.o tournament.o page.o question.o database.o ./SQLiteCpp/Column.o ./SQLiteCpp/Database.o ./SQLiteCpp/Statement.o ./SQLiteCpp/Transaction.o -o ../build/omar -g $(CFLAGS) $(LIBS)
 
-test: test.o  tournament.o page.o question.o
-	$(CC) test.o  tournament.o page.o question.o -o ../build/test $(CFLAGS) $(LIBS)
+test: test.o  tournament.o page.o question.o database.o
+	$(CC) test.o  tournament.o page.o question.o database.o -o ../build/test $(CFLAGS) $(LIBS)
 
 vartest: variables.cpp
 	$(CC) variables.cpp -o ../build/vartest -g $(CFLAGS) $(LIBS)
 
 validate: validation.o 
 	$(CC) validation.o  -o ../build/validate -g $(CFLAGS) $(LIBS)
+
+SQLiteCpp:
+	$(MAKE) -C ./SQLiteCpp all
 
 validation.o: validation.cpp
 	$(CC) -c validation.cpp $(CFLAGS)
@@ -44,3 +45,4 @@ database.o: database.cpp
 
 clean:
 	rm -rf *.o
+	$(MAKE) -C ./SQLiteCpp clean

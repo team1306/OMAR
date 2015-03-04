@@ -7,7 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <sqlite3.h>
-#include <SQLiteCpp/SQLiteCpp.h>
+#include "SQLiteCpp/SQLiteCpp.h"
 
 Database::Database(std::string filename) : database(filename, SQLITE_OPEN_READWRITE) {
   
