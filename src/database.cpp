@@ -41,7 +41,15 @@ Database::Database(std::string dbfilename, std::string posfile) : database(dbfil
   }
 }
 
-void Database::updateQuestions(std::vector<Question> updateQuestions) {
+void Database::updateQuestions(std::vector<Question> fileQuestions) {
+  SQLite::Transaction transaction (database);
+  int rc = database.exec("DELETE FROM questions;");
+
+  for(int i=0; i<fileQuestions.size(); i++) {
+    database.exec("INSERT INTO questions VALUES (" + fileQuestions.getUR().x + ", " + fileQuestions.getUR().y + ", " + fileQuestions.getLL().x + ", " + fileQuestions.getLL().y + ");");
+  }
+
+  transaction.commit();
 }
 
 std::vector<Question> Database::getQuestions() {
