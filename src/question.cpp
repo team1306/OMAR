@@ -66,3 +66,7 @@ Point Question::getLL(void) {
 void Question::setAnswer(bool b) {
   answer = b;
 }
+
+bool Question::operator==(Question &other) {
+  return (ur == other.getUR() && ll == other.getLL() && q == other.getName());
+}

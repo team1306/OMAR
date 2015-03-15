@@ -136,6 +136,16 @@ class Question {
    */
 
   bool getAnswer(void) {return answer;}
+
+  /**
+   * Overload equality to check for equality of every value.
+   *
+   * @param other Other Question
+   * @return Are the two questions equal
+   */
+
+  bool operator==(Question&);
+
  private:
   Point ur, ll;
   std::string q;
