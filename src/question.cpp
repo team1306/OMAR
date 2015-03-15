@@ -70,3 +70,7 @@ void Question::setAnswer(bool b) {
 bool Question::operator==(Question &other) {
   return (ur == other.getUR() && ll == other.getLL() && q == other.getName());
 }
+
+bool Question::operator!=(Question &other) {
+  return !(*this == other);
+}

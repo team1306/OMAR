@@ -146,6 +146,15 @@ class Question {
 
   bool operator==(Question&);
 
+  /**
+   * Overload inequality to check for inequality of every value.
+   *
+   * @param other Other Question
+   * @return Are the two questions not equal
+   */
+
+  bool operator!=(Question&);
+
  private:
   Point ur, ll;
   std::string q;
