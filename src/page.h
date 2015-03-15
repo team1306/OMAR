@@ -85,6 +85,14 @@ class Page {
   Size getPageSize();
 
   /**
+   * Get the vector of Questions.
+   *
+   * @return A vector of Questions
+   */
+
+  std::vector<Question>& getQuestions();
+
+  /**
    * Find the calibration circles and rotate the image to center the calibration
    * rectangle.
    */

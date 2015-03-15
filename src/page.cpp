@@ -64,6 +64,10 @@ Size Page::getPageSize() {
   return ret;
 }
 
+std::vector<Question>& Page::getQuestions() {
+  return questions;
+}
+
 void Page::align() {
   std::vector<Vec3f> circles;
   getCalibrationCircles(circles);
