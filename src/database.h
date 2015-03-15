@@ -15,13 +15,18 @@
 #define PAGE_NOT_FOUND 20
 
 /*
- * questions database
+ * questions table
  * urx | ury | llx | lly | question text
  */
 
 /*
- * pages database
+ * pages table
  * filename | calrectx | calrecty | pagesizex | pagesizey
+ */
+
+/*
+ * data table
+ * qid | pid | data
  */
 
 /**
@@ -38,12 +43,23 @@ class Database {
 
   /**
    * Initialize database from the filename specified. Questions are stored in
-   * one table and pages are stored in another.
+   * one table and pages are stored in another. The other filename refers to the
+   * .pos file so that the constructor can validate the Questions table.
    *
-   * @param pagesfile Absolute path to the sqlite database file
+   * @param dbfilename Absolute path to the sqlite database file
+   * @param posfile Absolute path to the .pos file
    */
   
-  Database(std::string);
+  Database(std::string, std::string);
+
+  /**
+   * Update the Questions table with the questions contained in the vector 
+   * specified.
+   *
+   * @param fileQuestions Vector of questions to write to table
+   */
+
+  void updateQuestions(std::vector<Question>);
 
   /**
    * Retrieve all questions stored in the question table.
@@ -82,6 +98,8 @@ class Database {
   void updatePage(Page);
 
  private:
+  
+  std::vector<Question> getData(int);
 
   /// SQLite database object
   SQLite::Database database;
