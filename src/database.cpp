@@ -25,7 +25,7 @@ Database::Database(std::string dbfilename, std::string posfile) : database(dbfil
   std::vector<Question> dbQuestions;
   SQLite::Statement query (database, "SELECT * FROM questions;");
   while(query.executeStep()) {
-    dbQuestions.push_back(Question(query.getColumn(1), query.getColumn(2), query.getColumn(3), query.getColumn(4), query.getColumn(5)));
+    dbQuestions.push_back(Question(query.getColumn(1).getInt(), query.getColumn(2).getInt(), query.getColumn(3).getInt(), query.getColumn(4).getInt(), query.getColumn(5)));
   }
 
   if(fileQuestions.size() == dbQuestions.size()) {
@@ -46,10 +46,52 @@ void Database::updateQuestions(std::vector<Question> fileQuestions) {
   int rc = database.exec("DELETE FROM questions;");
 
   for(int i=0; i<fileQuestions.size(); i++) {
-    database.exec("INSERT INTO questions VALUES (" + fileQuestions.getUR().x + ", " + fileQuestions.getUR().y + ", " + fileQuestions.getLL().x + ", " + fileQuestions.getLL().y + ");");
+    database.exec("INSERT INTO questions VALUES (" + std::to_string(fileQuestions[i].getUR().x) + ", " + std::to_string(fileQuestions[i].getUR().y) + ", " + std::to_string(fileQuestions[i].getLL().x) + ", " + std::to_string(fileQuestions[i].getLL().y) + ");");
   }
 
   transaction.commit();
+}
+
+void Database::updatePage(Page update) {
+
+  std::string filename = update.filename();
+  std::string awidth = std::to_string(update.getCalibrationSize().width);
+  std::string aheight = std::to_string(update.getCalibrationSize().height);
+  std::string bwidth = std::to_string(update.getPageSize().width);
+  std::string bheight = std::to_string(update.getPageSize().height);
+
+  SQLite::Statement query (database, "SELECT * FROM pages WHERE filename = '" + filename + "';");
+  int rc;
+
+  if(query.executeStep()) {
+    SQLite::Transaction transaction (database);
+
+    rc = database.exec("UPDATE pages SET calrectx = " + awidth + ", calrecty = " + aheight + ", pagesizex = " + bwidth + ", pagesizey = " + bheight + " WHERE filename = '" + filename + "';");
+    
+    transaction.commit();
+  }
+  else {
+    SQLite::Transaction transaction (database);
+    
+    rc = database.exec("INSERT INTO pages VALUES ('" + filename + "', " + awidth + ", " + aheight + ", " + bwidth + ", " + bheight + ");");
+
+    transaction.commit();
+  }
+
+  SQLite::Transaction dataTransaction (database);
+  std::vector<Question> questions = update.getQuestions();
+  for(int i=0; i<questions.size(); i++) {
+    SQLite::Statement qQuery (database, "SELECT rowid FROM questions WHERE question = '" + questions[i].getName() + "';");
+    qQuery.executeStep();
+    int qid = qQuery.getColumn(1).getInt();
+
+    SQLite::Statement pQuery (database, "SELECT rowid FROM pages WHERE filename = '" + filename + "';");
+    pQuery.executeStep();
+    int pid = pQuery.getColumn(1).getInt();
+
+    database.exec("INSERT INTO data VALUES (" + std::to_string(qid) + ", " + std::to_string(pid) + ", " + std::to_string(questions[i].getAnswer()) + ");");
+  }
+  dataTransaction.commit();
 }
 
 std::vector<Question> Database::getQuestions() {
@@ -92,33 +134,6 @@ Page Database::getPage(std::string filename, std::vector<Question> questions) {
   }
   else {
     throw PAGE_NOT_FOUND;
-  }
-}
-
-void Database::updatePage(Page update) {
-
-  std::string filename = update.filename();
-  std::string awidth = std::to_string(update.getCalibrationSize().width);
-  std::string aheight = std::to_string(update.getCalibrationSize().height);
-  std::string bwidth = std::to_string(update.getPageSize().width);
-  std::string bheight = std::to_string(update.getPageSize().height);
-
-  SQLite::Statement query (database, "SELECT * FROM pages WHERE filename = '" + filename + "';");
-  int rc;
-
-  if(query.executeStep()) {
-    SQLite::Transaction transaction (database);
-
-    rc = database.exec("UPDATE pages SET calrectx = " + awidth + ", calrecty = " + aheight + ", pagesizex = " + bwidth + ", pagesizey = " + bheight + " WHERE filename = '" + filename + "';");
-    
-    transaction.commit();
-  }
-  else {
-    SQLite::Transaction transaction (database);
-    
-    rc = database.exec("INSERT INTO pages VALUES ('" + filename + "', " + awidth + ", " + aheight + ", " + bwidth + ", " + bheight + ");");
-
-    transaction.commit();
   }
 }
 

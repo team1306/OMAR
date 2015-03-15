@@ -62,6 +62,16 @@ class Database {
   void updateQuestions(std::vector<Question>);
 
   /**
+   * Update a file in the database based on the data stored in a Page. If the
+   * file already exists, update its row, but if the file isn't in the database
+   * yet, create a new row.
+   *
+   * @param update Page containing data to be written to the database
+   */
+
+  void updatePage(Page);
+
+  /**
    * Retrieve all questions stored in the question table.
    *
    * @return A Question vector
@@ -86,16 +96,6 @@ class Database {
    */
 
   Page getPage(std::string, std::vector<Question>);
-
-  /**
-   * Update a file in the database based on the data stored in a Page. If the
-   * file already exists, update its row, but if the file isn't in the database
-   * yet, create a new row.
-   *
-   * @param update Page containing data to be written to the database
-   */
-
-  void updatePage(Page);
 
  private:
   
