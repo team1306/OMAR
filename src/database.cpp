@@ -112,13 +112,13 @@ Page Database::getPage(int pageid) {
   while(questionsQuery.executeStep()) {
     questions.push_back(Question(questionsQuery.getColumn(1).getInt(), questionsQuery.getColumn(2).getInt(), questionsQuery.getColumn(3).getInt(), questionsQuery.getColumn(4).getInt(), questionsQuery.getColumn(5)));
     
-    SQLite::Statement dataQuery (database, "SELECT * FROM data WHERE pid = " + std::to_string(pageid) + " AND qid = " + std::to_string(questionsQuery.getColumn(6) + ";"));
+    SQLite::Statement dataQuery (database, "SELECT * FROM data WHERE pid = " + std::to_string(pageid) + " AND qid = " + std::to_string(questionsQuery.getColumn(6).getInt()) + ";");
     dataQuery.executeStep();
 
     questions[questions.size() - 1].setAnswer(dataQuery.getColumn(3).getInt());
   }
 
-  SQLite::Statement pageQuery (database, "SELECT * FROM pages WHERE rowid = " + pageid + ";");
+  SQLite::Statement pageQuery (database, "SELECT * FROM pages WHERE rowid = " + std::to_string(pageid) + ";");
   Size calRect (pageQuery.getColumn(2).getInt(), pageQuery.getColumn(3).getInt());
   Size pageSize (pageQuery.getColumn(4).getInt(), pageQuery.getColumn(5).getInt());
   Page page (questions, imread(pageQuery.getColumn(1)), calRect, pageSize, pageQuery.getColumn(1));
