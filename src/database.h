@@ -72,6 +72,24 @@ class Database {
   void updatePage(Page);
 
   /**
+   * Retrieve a page by its filename.
+   *
+   * @param filename The name of the file to be retrieved
+   * @return A page from the database
+   */
+
+  Page getPage(std::string);
+
+  /**
+   * Retrieve a page by its id.
+   *
+   * @param pageid The id of the page to be retrieved.
+   * @return A page from the database
+   */
+
+  Page getPage(int);
+
+  /**
    * Retrieve all questions stored in the question table.
    *
    * @return A Question vector
