@@ -92,6 +92,9 @@ void Database::updatePage(Page update) {
     database.exec("INSERT INTO data VALUES (" + std::to_string(qid) + ", " + std::to_string(pid) + ", " + std::to_string(questions[i].getAnswer()) + ");");
   }
   dataTransaction.commit();
+
+  // now write the image to a file
+  // TODO
 }
 
 Page Database::getPage(std::string filename) {
