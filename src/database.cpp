@@ -81,9 +81,11 @@ void Database::updatePage(Page update) {
   std::vector<Question> questions = update.getQuestions();
   for(int i=0; i<questions.size(); i++) {
     SQLite::Statement qQuery (database, "SELECT rowid FROM questions WHERE question = '" + questions[i].getName() + "';");
+    qQuery.executeStep();
     int qid = qQuery.getColumn(0).getInt();
 
     SQLite::Statement pQuery (database, "SELECT rowid FROM pages WHERE filename = '" + filename + "';");
+    pQuery.executeStep();
     int pid = pQuery.getColumn(0).getInt();
 
     database.exec("INSERT INTO data VALUES (" + std::to_string(qid) + ", " + std::to_string(pid) + ", " + std::to_string(questions[i].getAnswer()) + ");");
@@ -96,13 +98,18 @@ void Database::updatePage(Page update) {
 
 Page Database::getPage(std::string filename) {
   SQLite::Statement query (database, "SELECT rowid FROM pages WHERE filename = '" + filename + "';");
-  query.executeStep();
-  int pid = query.getColumn(0).getInt();
-
-  return getPage(pid);
+  if(query.executeStep()) {
+    int pid = query.getColumn(0).getInt();
+    
+    return getPage(pid);
+  }
+  else {
+    throw 20; // TODO
+  }
 }
 
 Page Database::getPage(int pageid) {
+  std::cout << "in" << std::endl;
   SQLite::Statement questionsQuery (database, "SELECT *, rowid FROM questions;");
   
   std::vector<Question> questions;
@@ -115,7 +122,9 @@ Page Database::getPage(int pageid) {
     questions[questions.size() - 1].setAnswer(dataQuery.getColumn(2).getInt());
   }
 
+  std::cout << pageid << std::endl;
   SQLite::Statement pageQuery (database, "SELECT * FROM pages WHERE rowid = " + std::to_string(pageid) + ";");
+  std::cout << "out" << std::endl;
   Size calRect (pageQuery.getColumn(1).getInt(), pageQuery.getColumn(2).getInt());
   Size pageSize (pageQuery.getColumn(3).getInt(), pageQuery.getColumn(4).getInt());
   Page page (questions, imread(pageQuery.getColumn(0)), calRect, pageSize, pageQuery.getColumn(0));
