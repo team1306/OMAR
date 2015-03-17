@@ -94,6 +94,35 @@ void Database::updatePage(Page update) {
   dataTransaction.commit();
 }
 
+Page Database::getPage(std::string filename) {
+  SQLite::Statement query (database, "SELECT rowid FROM pages WHERE filename = '" + filename + "';");
+  query.executeStep();
+  int pid = query.getColumn(1).getInt();
+
+  return getPage(pid);
+}
+
+Page Database::getPage(int pageid) {
+  SQLite::Statement questionsQuery (database, "SELECT *, rowid FROM questions;");
+  
+  std::vector<Question> questions;
+  while(questionsQuery.executeStep()) {
+    questions.push_back(Question(questionsQuery.getColumn(1).getInt(), questionsQuery.getColumn(2).getInt(), questionsQuery.getColumn(3).getInt(), questionsQuery.getColumn(4).getInt(), questionsQuery.getColumn(5)));
+    
+    SQLite::Statement dataQuery (database, "SELECT * FROM data WHERE pid = " + std::to_string(pageid) + " AND qid = " + std::to_string(questionsQuery.getColumn(6) + ";"));
+    dataQuery.executeStep();
+
+    questions[questions.size() - 1].setAnswer(dataQuery.getColumn(3).getInt());
+  }
+
+  SQLite::Statement pageQuery (database, "SELECT * FROM pages WHERE rowid = " + pageid + ";");
+  Size calRect (pageQuery.getColumn(2).getInt(), pageQuery.getColumn(3).getInt());
+  Size pageSize (pageQuery.getColumn(4).getInt(), pageQuery.getColumn(5).getInt());
+  Page page (questions, imread(pageQuery.getColumn(1)), calRect, pageSize, pageQuery.getColumn(1));
+
+  return page;
+}
+
 std::vector<Question> Database::getQuestions() {
   std::vector<Question> questions;
 
