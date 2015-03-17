@@ -25,7 +25,7 @@ Database::Database(std::string dbfilename, std::string posfile) : database(dbfil
   std::vector<Question> dbQuestions;
   SQLite::Statement query (database, "SELECT * FROM questions;");
   while(query.executeStep()) {
-    dbQuestions.push_back(Question(query.getColumn(1).getInt(), query.getColumn(2).getInt(), query.getColumn(3).getInt(), query.getColumn(4).getInt(), query.getColumn(5)));
+    dbQuestions.push_back(Question(query.getColumn(0).getInt(), query.getColumn(1).getInt(), query.getColumn(2).getInt(), query.getColumn(3).getInt(), query.getColumn(4)));
   }
 
   if(fileQuestions.size() == dbQuestions.size()) {
@@ -46,14 +46,13 @@ void Database::updateQuestions(std::vector<Question> fileQuestions) {
   int rc = database.exec("DELETE FROM questions;");
 
   for(int i=0; i<fileQuestions.size(); i++) {
-    database.exec("INSERT INTO questions VALUES (" + std::to_string(fileQuestions[i].getUR().x) + ", " + std::to_string(fileQuestions[i].getUR().y) + ", " + std::to_string(fileQuestions[i].getLL().x) + ", " + std::to_string(fileQuestions[i].getLL().y) + ");");
+    database.exec("INSERT INTO questions VALUES (" + std::to_string(fileQuestions[i].getUR().x) + ", " + std::to_string(fileQuestions[i].getUR().y) + ", " + std::to_string(fileQuestions[i].getLL().x) + ", " + std::to_string(fileQuestions[i].getLL().y) + ", '" + fileQuestions[i].getName() + "');");
   }
 
   transaction.commit();
 }
 
 void Database::updatePage(Page update) {
-
   std::string filename = update.filename();
   std::string awidth = std::to_string(update.getCalibrationSize().width);
   std::string aheight = std::to_string(update.getCalibrationSize().height);
@@ -82,12 +81,10 @@ void Database::updatePage(Page update) {
   std::vector<Question> questions = update.getQuestions();
   for(int i=0; i<questions.size(); i++) {
     SQLite::Statement qQuery (database, "SELECT rowid FROM questions WHERE question = '" + questions[i].getName() + "';");
-    qQuery.executeStep();
-    int qid = qQuery.getColumn(1).getInt();
+    int qid = qQuery.getColumn(0).getInt();
 
     SQLite::Statement pQuery (database, "SELECT rowid FROM pages WHERE filename = '" + filename + "';");
-    pQuery.executeStep();
-    int pid = pQuery.getColumn(1).getInt();
+    int pid = pQuery.getColumn(0).getInt();
 
     database.exec("INSERT INTO data VALUES (" + std::to_string(qid) + ", " + std::to_string(pid) + ", " + std::to_string(questions[i].getAnswer()) + ");");
   }
@@ -100,7 +97,7 @@ void Database::updatePage(Page update) {
 Page Database::getPage(std::string filename) {
   SQLite::Statement query (database, "SELECT rowid FROM pages WHERE filename = '" + filename + "';");
   query.executeStep();
-  int pid = query.getColumn(1).getInt();
+  int pid = query.getColumn(0).getInt();
 
   return getPage(pid);
 }
@@ -110,18 +107,18 @@ Page Database::getPage(int pageid) {
   
   std::vector<Question> questions;
   while(questionsQuery.executeStep()) {
-    questions.push_back(Question(questionsQuery.getColumn(1).getInt(), questionsQuery.getColumn(2).getInt(), questionsQuery.getColumn(3).getInt(), questionsQuery.getColumn(4).getInt(), questionsQuery.getColumn(5)));
+    questions.push_back(Question(questionsQuery.getColumn(0).getInt(), questionsQuery.getColumn(1).getInt(), questionsQuery.getColumn(2).getInt(), questionsQuery.getColumn(3).getInt(), questionsQuery.getColumn(4)));
     
-    SQLite::Statement dataQuery (database, "SELECT * FROM data WHERE pid = " + std::to_string(pageid) + " AND qid = " + std::to_string(questionsQuery.getColumn(6).getInt()) + ";");
+    SQLite::Statement dataQuery (database, "SELECT * FROM data WHERE pid = " + std::to_string(pageid) + " AND qid = " + std::to_string(questionsQuery.getColumn(5).getInt()) + ";");
     dataQuery.executeStep();
 
-    questions[questions.size() - 1].setAnswer(dataQuery.getColumn(3).getInt());
+    questions[questions.size() - 1].setAnswer(dataQuery.getColumn(2).getInt());
   }
 
   SQLite::Statement pageQuery (database, "SELECT * FROM pages WHERE rowid = " + std::to_string(pageid) + ";");
-  Size calRect (pageQuery.getColumn(2).getInt(), pageQuery.getColumn(3).getInt());
-  Size pageSize (pageQuery.getColumn(4).getInt(), pageQuery.getColumn(5).getInt());
-  Page page (questions, imread(pageQuery.getColumn(1)), calRect, pageSize, pageQuery.getColumn(1));
+  Size calRect (pageQuery.getColumn(1).getInt(), pageQuery.getColumn(2).getInt());
+  Size pageSize (pageQuery.getColumn(3).getInt(), pageQuery.getColumn(4).getInt());
+  Page page (questions, imread(pageQuery.getColumn(0)), calRect, pageSize, pageQuery.getColumn(0));
 
   return page;
 }
@@ -131,7 +128,7 @@ std::vector<Page> Database::getPages() {
 
   std::vector<Page> pages;
   while(pagesQuery.executeStep()) {
-    pages.push_back(getPage(pagesQuery.getColumn(1).getInt()));
+    pages.push_back(getPage(pagesQuery.getColumn(0).getInt()));
   }
 
   return pages;
