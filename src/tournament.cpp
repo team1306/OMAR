@@ -13,11 +13,11 @@
 
 using namespace cv;
 
-Tournament::Tournament(std::vector<std::string>& files, std::string posFile, std::string calFile, std::string datFile) : database(datFile) {
+Tournament::Tournament(std::vector<std::string>& files, std::string posFile, std::string calFile, std::string datFile) : database(datFile, posFile) {
   prepare(files, posFile, calFile);
 }
 
-Tournament::Tournament(std::string dir, std::string posFile, std::string calFile, std::string datFile) : database(datFile) { 
+Tournament::Tournament(std::string dir, std::string posFile, std::string calFile, std::string datFile) : database(datFile, posFile) { 
   std::vector<std::string> files;
   getDir(dir, files);
   prepare(files, posFile, calFile);
