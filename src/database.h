@@ -89,6 +89,15 @@ class Database {
 
   Page getPage(int);
 
+  /**
+   * Retrieve all pages. This is very slow and should be avoided. Use getPage 
+   * instead.
+   *
+   * @return All pages in the database.
+   */
+
+  std::vector<Page> getPages();
+
  private:
   
   std::vector<Question> getData(int);

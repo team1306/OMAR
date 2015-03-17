@@ -125,3 +125,14 @@ Page Database::getPage(int pageid) {
 
   return page;
 }
+
+std::vector<Page> Database::getPages() {
+  SQLite::Statement pagesQuery (database, "SELECT rowid FROM pages;");
+
+  std::vector<Page> pages;
+  while(pagesQuery.executeStep()) {
+    pages.push_back(getPage(pagesQuery.getColumn(1).getInt()));
+  }
+
+  return pages;
+}
