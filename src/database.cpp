@@ -56,6 +56,7 @@ void Database::updateQuestions(std::vector<Question> fileQuestions) {
 
 void Database::updatePage(Page update) {
   std::string filename = update.filename();
+  filename = filename.substr(0, filename.size() - 3) + "good.jpg";
   std::string awidth = std::to_string(update.getCalibrationSize().width);
   std::string aheight = std::to_string(update.getCalibrationSize().height);
   std::string bwidth = std::to_string(update.getPageSize().width);
@@ -95,7 +96,7 @@ void Database::updatePage(Page update) {
   dataTransaction.commit();
 
   // now write the image to a file
-  // TODO
+  imwrite(filename, update.getImage());
 }
 
 Page Database::getPage(std::string filename) {
