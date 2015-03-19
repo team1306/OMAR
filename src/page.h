@@ -85,6 +85,14 @@ class Page {
   Size getPageSize();
 
   /**
+   * Return a reference to the image.
+   *
+   * @return A reference to the scan image
+   */
+
+  Mat& getImage() {return image;}
+
+  /**
    * Get the vector of Questions.
    *
    * @return A vector of Questions
