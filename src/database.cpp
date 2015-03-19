@@ -143,3 +143,14 @@ std::vector<Page> Database::getPages() {
 
   return pages;
 }
+
+std::vector<Question> Database::getQuestions() {
+  SQLite::Statement qQuery (database, "SELECT * FROM questions;");
+
+  std::vector<Question> questions;
+  while(qQuery.executeStep()) {
+    questions.push_back(Question(qQuery.getColumn(0).getInt(), qQuery.getColumn(1).getInt(), qQuery.getColumn(2).getInt(), qQuery.getColumn(3).getInt(), qQuery.getColumn(4)));
+  }
+
+  return questions;
+}

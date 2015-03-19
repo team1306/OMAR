@@ -98,6 +98,14 @@ class Database {
 
   std::vector<Page> getPages();
 
+  /**
+   * Return all of the questions stored in the database.
+   *
+   * @return A vector of Questions
+   */
+
+  std::vector<Question> getQuestions();
+
  private:
   
   std::vector<Question> getData(int);
