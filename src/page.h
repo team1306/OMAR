@@ -108,7 +108,8 @@ class Page {
   void align();
 
   /**
-   * Find the calibration circles and crop the image to the calibration rectangle.
+   * Find the calibration circles and crop the image to the calibration 
+   * rectangle.
    */
 
   void crop();

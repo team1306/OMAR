@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 
-Number::Number(std::vector<Question> &qs) {
+Number::Number(std::vector<Question> qs) {
   questions = qs;
 }
 

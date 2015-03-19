@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-CheckBox::CheckBox(std::vector<Question>& qs) {
+CheckBox::CheckBox(std::vector<Question> qs) {
   questions = qs;
 }
 

@@ -8,7 +8,7 @@
 
 class CheckBox : public Field {
  public:
-  CheckBox(std::vector<Question>&);
+  CheckBox(std::vector<Question>);
   void parse();
   std::string getValue();
  private:

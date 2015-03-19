@@ -8,9 +8,10 @@
 
 class Number : public Field {
  public:
-  Number(std::vector<Question>&);
+  Number(std::vector<Question>);
   void parse();
   std::string getValue();
+
  private:
   std::vector<std::string>& split(const std::string &s, char delim, std::vector<std::string> &elems);
   std::vector<std::string> split(const std::string &s, char delim);

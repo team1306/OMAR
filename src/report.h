@@ -9,6 +9,7 @@
 
 #include <string>
 #include "database.h"
+#include "field.h"
 
 /**
  * @class Report
@@ -30,7 +31,7 @@ class Report {
    * @param db A reference to a Database
    */
 
-  Report(Database&);
+  Report(Database*);
 
   /**
    * Read the binary data from the database and store it as Fields.
@@ -54,8 +55,32 @@ class Report {
   void writeToFile(std::string);
 
  private:
-  Database& database;
-  std::vector<Field> fields;
+
+  /**
+   * Count the number of periods in a string. Used to identify the type of a 
+   * question.
+   *
+   * @param s String to search
+   * @return Number of periods
+   */
+
+  int countDots(std::string);
+
+  /**
+   * Get the tag before any periods.
+   *
+   * @param s String to search
+   * @return Tag name
+   */
+
+  std::string getTag(std::string);
+
+  Database *database;
+  std::vector<std::vector<Field> > fields;
+  std::vector<std::string> CBTags;
+  std::vector<std::string> NumTags;
+  std::vector<std::string> MCTags;
+  std::vector<std::string> tags;
 };
 
 #endif

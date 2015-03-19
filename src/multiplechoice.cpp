@@ -1,6 +1,6 @@
 #include "multiplechoice.h"
 
-MultipleChoice::MultipleChoice(std::vector<Question> &qs) {
+MultipleChoice::MultipleChoice(std::vector<Question> qs) {
   questions = qs;
 }
 

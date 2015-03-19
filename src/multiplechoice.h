@@ -8,7 +8,7 @@
 
 class MultipleChoice : public Field {
  public:
-  MultipleChoice(std::vector<Question>&);
+  MultipleChoice(std::vector<Question>);
   void parse();
   std::string getValue();
  private:
