@@ -4,6 +4,7 @@
 #include "multiplechoice.h"
 #include "number.h"
 #include <algorithm>
+#include <fstream>
 
 Report::Report(Database *db) {
   database = db;
@@ -78,7 +79,20 @@ void Report::parse() {
 }
 
 void Report::writeToFile(std::string reportFile) {
-  // dear lord
+  std::ofstream fout (reportFile);
+
+  for(int i=0; i<tags.size(); i++) {
+    fout << tags[i] << ";";
+  }
+  fout << std::endl;
+
+  for(int i=0; i<fields.size(); i++) {
+    for(int j=0; j<fields[i].size(); j++) {
+      fout << fields[i][j].getValue() << ";";
+    }
+  }
+  
+  fout.close();
 }
 
 int Report::countDots(std::string s) {
@@ -92,10 +106,11 @@ int Report::countDots(std::string s) {
 }
 
  std::string Report::getTag(std::string s) {
-  std::string tag = ""; // should reimplement with 
+  std::string tag = ""; // should reimplement with string stream
   int i = 0;
   while(s[i] != '.' && i != s.size()) {
     tag += s[i];
+    i++;
   }
 
   return tag;

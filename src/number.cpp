@@ -4,6 +4,7 @@
 
 Number::Number(std::vector<Question> qs) {
   questions = qs;
+  value = 0;
 }
 
 void Number::parse() {
@@ -14,23 +15,14 @@ void Number::parse() {
       value += std::stoi(splitQ[1]) * std::stoi(splitQ[2]);
     }
   }
+
+  tag = split(questions[0].getName(), '.')[0];
 }
 
 std::string Number::getValue() {
   return std::to_string(value);
 }
 
-std::vector<std::string>& Number::split(const std::string &s, char delim, std::vector<std::string> &elems) {
-    std::stringstream ss(s);
-    std::string item;
-    while (std::getline(ss, item, delim)) {
-        elems.push_back(item);
-    }
-    return elems;
-}
-
-std::vector<std::string> Number::split(const std::string &s, char delim) {
-    std::vector<std::string> elems;
-    split(s, delim, elems);
-    return elems;
+std::string Number::getTag() {
+  return tag;
 }

@@ -11,12 +11,11 @@ class Number : public Field {
   Number(std::vector<Question>);
   void parse();
   std::string getValue();
+  std::string getTag();
 
  private:
-  std::vector<std::string>& split(const std::string &s, char delim, std::vector<std::string> &elems);
-  std::vector<std::string> split(const std::string &s, char delim);
-
-  int value = 0;
+  std::string tag;
+  int value;
   std::vector<Question> questions;
 };
 

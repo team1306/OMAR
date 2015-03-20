@@ -11,8 +11,10 @@ class CheckBox : public Field {
   CheckBox(std::vector<Question>);
   void parse();
   std::string getValue();
+  std::string getTag();
  private:
   bool value;
+  std::string tag;
   std::vector<Question> questions;
 };
 

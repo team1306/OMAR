@@ -11,9 +11,11 @@ class MultipleChoice : public Field {
   MultipleChoice(std::vector<Question>);
   void parse();
   std::string getValue();
+  std::string getTag();
  private:
   int value;
   std::vector<Question> questions;
+  std::string tag;
 };
 
 #endif

@@ -11,8 +11,14 @@ void MultipleChoice::parse() {
       break;
     }
   }
+
+  tag = split(questions[0].getName(), '.')[0];
 }
 
 std::string MultipleChoice::getValue() {
   return questions[value].getName();
+}
+
+std::string MultipleChoice::getTag() {
+  return tag;
 }
