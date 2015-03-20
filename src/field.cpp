@@ -2,11 +2,11 @@
 #include "question.h"
 #include <vector>
 
-Field::Field(std::vector<Question> questions) {}
-
 void Field::parse() {}
 
 std::string Field::getValue() {}
+
+std::string Field::getTag() {}
 
 std::vector<std::string>& Field::split(const std::string &s, char delim, std::vector<std::string> &elems) {
     std::stringstream ss(s);
