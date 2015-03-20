@@ -4,14 +4,17 @@
 #include <dirent.h>
 #include <unistd.h>
 #include "tournament.h"
+#include "database.h"
+#include "report.h"
 
 int main(int argv, char** argc) {
   bool gotScansDir = false;
-  int i = 1;
   bool gotPosFile = false;
   bool gotCalFile = false;
-  bool gotDatFile = false;
-  std::string posFile, calFile, scansDir, datFile;
+  bool gotDBFile = false;
+  bool gotRepFile = false;
+  std::string posFile, calFile, scansDir, dbFile, reportFile;
+  int i = 1;
   while(i < argv-1) {
     if(argc[i][0] == '-') {
       if(argc[i][1] == 'p') {
@@ -30,8 +33,13 @@ int main(int argv, char** argc) {
 	i++;
       }
       else if(argc[i][1] == 'd') {
-	gotDatFile = true;
-	datFile = std::string (argc[i+1]);
+	gotDBFile = true;
+	dbFile = std::string (argc[i+1]);
+	i++;
+      }
+      else if(argc[i][1] == 'r') {
+	gotRepFile = true;
+	reportFile = std::string (argc[i+1]);
 	i++;
       }
     }
@@ -49,20 +57,26 @@ int main(int argv, char** argc) {
     std::cout << "Missing .cal file (-c)" << std::endl;
     return 1;
   }
-  if(!gotDatFile) {
+  if(!gotDBFile) {
     std::cout << "Missing data directory (-d)" << std::endl;
     return 1;
   }
-  Tournament t (scansDir, posFile, calFile, datFile);
-  std::cout << "Prepared" << std::endl;
+  if(!gotRepFile) {
+    std::cout << "Missing report file (-r)" << std::endl;
+    return 1;
+  }
+
+  Database database (dbFile, posFile);
+  Tournament t (scansDir, posFile, calFile, &database);
+  std::cout << "Images prepared" << std::endl;
   t.process();
-  std::cout << "Processed" << std::endl;
-  t.report(datFile);
-  std::cout << "Reported" << std::endl;
-  chdir(datFile.c_str());
-  std::system("python ../src/formatting/bintonum.py");
+  std::cout << "Images processed" << std::endl;
+  Report report (&database);
+  report.initialize();
+  std::cout << "Fields initialized" << std::endl;
+  report.parse();
+  std::cout << "Data parsed" << std::endl;
+  report.writeToFile(reportFile);
   std::cout << "Converted to csv" << std::endl;
-  //std::system("python ./main.py");
-  std::cout << "Ranked teams" << std::endl;
   return 0;
 }
