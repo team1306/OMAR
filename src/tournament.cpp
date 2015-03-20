@@ -13,11 +13,8 @@
 
 using namespace cv;
 
-Tournament::Tournament(std::vector<std::string>& files, std::string posFile, std::string calFile, std::string datFile) : database(datFile, posFile) {
-  prepare(files, posFile, calFile);
-}
-
-Tournament::Tournament(std::string dir, std::string posFile, std::string calFile, std::string datFile) : database(datFile, posFile) { 
+Tournament::Tournament(std::string dir, std::string posFile, std::string calFile, Database* db) {
+  database = db;
   std::vector<std::string> files;
   getDir(dir, files);
   prepare(files, posFile, calFile);
@@ -25,7 +22,7 @@ Tournament::Tournament(std::string dir, std::string posFile, std::string calFile
 
 std::vector<std::string> Tournament::readLoaded(void) {
   std::vector<std::string> filenames;
-  std::vector<Page> pages = database.getPages();
+  std::vector<Page> pages = database->getPages();
   for(int i=0; i<pages.size(); i++) {
     filenames.push_back(pages[i].filename());
   }
@@ -94,7 +91,7 @@ void Tournament::process(void) { // read each Page instance
   for(int i=0; i<pages.size(); i++) {
     std::cout << "Processing " << pages[i].filename() << std::endl;
     pages[i].read();
-    database.updatePage(pages[i]);
+    database->updatePage(pages[i]);
   }
 }
 

@@ -26,27 +26,15 @@ class Tournament {
  public:
 
   /**
-   * Initialize a Tournament with a list of filenames to read the images from.
-   *
-   * @param files Vector of filename strings relative to the directory of 
-   * execution
-   * @param posFile Path to .pos file
-   * @param calFile Path to .cal file
-   * @param datFile Path to the scans database
-   */
-
-  Tournament(std::vector<std::string>&, std::string, std::string, std::string);
-
-  /**
    * Initialize a Tournament with a directory in which to find the image files.
    *
    * @param dir The path to the directory containing the images
    * @param posFile Path to .pos file
    * @param calFile Path to .cal file
-   * @param datFile Path to the scans database
+   * @param db Pointer to the scans database
    */
 
-  Tournament(std::string, std::string, std::string, std::string);
+  Tournament(std::string, std::string, std::string, Database*);
 
   /**
    * Read which files have already been processed from loaded.dat
@@ -122,7 +110,7 @@ class Tournament {
   std::vector<Mat> srcs;
   std::vector<std::string> names;
   std::vector<Point> ur, ll;
-  Database database;
+  Database* database;
 };
 
 #endif
