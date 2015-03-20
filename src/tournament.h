@@ -77,15 +77,6 @@ class Tournament {
   void process();
 
   /**
-   * Report the extracted data to the specified file. Must be run after 
-   * process().
-   *
-   * @param file Path to the report file
-   */
-
-  void report(std::string);
-
-  /**
    * Push the files in the directory onto the output vector. This bit is voodoo
    * and should not be tampered with.
    *

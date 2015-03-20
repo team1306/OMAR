@@ -98,28 +98,6 @@ void Tournament::process(void) { // read each Page instance
   }
 }
 
-void Tournament::report(std::string file) { // writes read data to csv file
-  std::ofstream fout ((file + "/report.dat").c_str());
-  fout << "filename" << ";";
-  for(int i=0; i<questions.size(); i++) {
-    fout << questions[i] << ";";
-  }
-  fout << std::endl;
-  std::vector<bool> a;
-  for(int i=0; i<pages.size(); i++) {
-    a = pages[i].answers();
-    if(std::find(a.begin(), a.end(), true) == a.end()) {
-      std::cout << "Badness! " << file << std::endl;
-    }
-    fout << pages[i].filename() << ";";
-    for(int x=0; x<a.size(); x++) {
-      fout << a[x] << ";";
-    }
-    fout << std::endl;
-  }
-  fout.close();
-}
-
 int Tournament::getDir(std::string dir, std::vector<std::string> &files) { // gets filenames from directory path
   DIR *dp;
   struct dirent *dirp;
