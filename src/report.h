@@ -34,6 +34,13 @@ class Report {
   Report(Database*);
 
   /**
+   * Almost default destructor.
+   */
+
+  
+  ~Report();
+
+  /**
    * Read the binary data from the database and store it as Fields.
    */
 
@@ -76,7 +83,7 @@ class Report {
   std::string getTag(std::string);
 
   Database *database;
-  std::vector<std::vector<Field> > fields;
+  std::vector<std::vector<Field*> > fields;
   std::vector<std::string> CBTags;
   std::vector<std::string> NumTags;
   std::vector<std::string> MCTags;

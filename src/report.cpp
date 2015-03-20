@@ -10,6 +10,14 @@ Report::Report(Database *db) {
   database = db;
 }
 
+Report::~Report() {
+  for(int i=0; i<fields.size(); i++) {
+    for(int j=0; j<fields[i].size(); j++) {
+      delete fields[i][j];
+    }
+  }
+}
+
 void Report::initialize() {
   std::vector<Question> questions = database->getQuestions();
   for(int i=0; i<questions.size(); i++) {
@@ -32,7 +40,7 @@ void Report::initialize() {
   // TODO this all needs to be optimized
   std::vector<Page> pages = database->getPages();
   for(int i=0; i<pages.size(); i++) {
-    std::vector<Field> fs;
+    std::vector<Field*> fs;
     std::vector<Question> pageQs = pages[i].getQuestions();
 
     // sort checkbox tags
@@ -43,7 +51,7 @@ void Report::initialize() {
 	  qs.push_back(pageQs[k]);
 	}
       }
-      fs.push_back(CheckBox(qs));
+      fs.push_back(new CheckBox(qs));
     }
 
     for(int j=0; j<NumTags.size(); j++) {
@@ -53,7 +61,7 @@ void Report::initialize() {
 	  qs.push_back(pageQs[k]);
 	}
       }
-      fs.push_back(Number(qs));
+      fs.push_back(new Number(qs));
     }
 
     for(int j=0; j<MCTags.size(); j++) {
@@ -63,7 +71,7 @@ void Report::initialize() {
 	  qs.push_back(pageQs[k]);
 	}
       }
-      fs.push_back(MultipleChoice(qs));
+      fs.push_back(new MultipleChoice(qs));
     }
 
     fields.push_back(fs);
@@ -73,7 +81,7 @@ void Report::initialize() {
 void Report::parse() {
   for(int i=0; i<fields.size(); i++) {
     for(int j=0; j<fields[i].size(); j++) {
-      fields[i][j].parse();
+      fields[i][j]->parse();
     }
   }
 }
@@ -81,15 +89,18 @@ void Report::parse() {
 void Report::writeToFile(std::string reportFile) {
   std::ofstream fout (reportFile);
 
+  std::cout << "tags" << std::endl;
   for(int i=0; i<tags.size(); i++) {
+    std::cout << tags[i] << ";";
     fout << tags[i] << ";";
   }
   fout << std::endl;
 
   for(int i=0; i<fields.size(); i++) {
     for(int j=0; j<fields[i].size(); j++) {
-      fout << fields[i][j].getValue() << ";";
+      fout << fields[i][j]->getValue() << ";";
     }
+    fout << std::endl;
   }
   
   fout.close();
