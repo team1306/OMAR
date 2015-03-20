@@ -4,11 +4,11 @@ LIBS=`pkg-config opencv --libs` -l sqlite3
 
 all: SQLiteCpp omar vartest
 
-omar: omar.o tournament.o page.o question.o database.o SQLiteCpp
-	$(CC) omar.o tournament.o page.o question.o database.o ./SQLiteCpp/Column.o ./SQLiteCpp/Database.o ./SQLiteCpp/Statement.o ./SQLiteCpp/Transaction.o -o ../build/omar -g $(CFLAGS) $(LIBS)
+omar: omar.o tournament.o page.o question.o database.o report.o checkbox.o number.o multiplechoice.o field.o SQLiteCpp
+	$(CC) omar.o tournament.o page.o question.o database.o report.o checkbox.o number.o multiplechoice.o field.o ./SQLiteCpp/Column.o ./SQLiteCpp/Database.o ./SQLiteCpp/Statement.o ./SQLiteCpp/Transaction.o -o ../build/omar -g $(CFLAGS) $(LIBS)
 
-test: test.o  tournament.o page.o question.o database.o report.o checkbox.o number.o multiplechoice.o field.o SQLiteCpp
-	$(CC) test.o  tournament.o page.o question.o database.o report.o checkbox.o number.o multiplechoice.o field.o ./SQLiteCpp/Column.o ./SQLiteCpp/Database.o ./SQLiteCpp/Statement.o ./SQLiteCpp/Transaction.o -o ../build/test $(SQLITE_CFLAGS) $(CFLAGS) $(LIBS)
+test: test.o tournament.o page.o question.o database.o report.o checkbox.o number.o multiplechoice.o field.o SQLiteCpp
+	$(CC) test.o tournament.o page.o question.o database.o report.o checkbox.o number.o multiplechoice.o field.o ./SQLiteCpp/Column.o ./SQLiteCpp/Database.o ./SQLiteCpp/Statement.o ./SQLiteCpp/Transaction.o -o ../build/test $(SQLITE_CFLAGS) $(CFLAGS) $(LIBS)
 
 vartest: variables.cpp
 	$(CC) variables.cpp -o ../build/vartest -g $(CFLAGS) $(LIBS)
