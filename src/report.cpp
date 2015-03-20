@@ -87,11 +87,9 @@ void Report::parse() {
 }
 
 void Report::writeToFile(std::string reportFile) {
-  std::ofstream fout (reportFile);
+  std::ofstream fout (reportFile)
 
-  std::cout << "tags" << std::endl;
   for(int i=0; i<tags.size(); i++) {
-    std::cout << tags[i] << ";";
     fout << tags[i] << ";";
   }
   fout << std::endl;
