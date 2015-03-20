@@ -82,6 +82,7 @@ void Page::crop() {
   }
   Rect r (cvFloor(circles[0][0]), cvFloor(circles[0][1]), cvFloor(circles[1][0])-cvFloor(circles[0][0]), cvFloor(circles[2][1])-cvFloor(circles[0][1]));
   Mat d (image, r);
+  page = d.size();
   d.copyTo(image);
 }
 
