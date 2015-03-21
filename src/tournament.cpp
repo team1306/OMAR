@@ -57,6 +57,7 @@ void Tournament::prepare(std::vector<std::string> files, const std::string posFi
     ll.push_back(a);
     questions.push_back(s);
   }
+  questions.erase(questions.end() - 1);
   std::cout << "Read positions" << std::endl;
 
   std::vector<std::string> filenames = readLoaded();

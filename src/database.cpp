@@ -21,8 +21,6 @@ Database::Database(std::string dbfilename, std::string posfile) : database(dbfil
     pos >> s >> a.x >> a.y >> b.x >> b.y;
     fileQuestions.push_back(Question(a, b, s));
   }
-  // This is the biggest hack ever. We need to track down how this extra question gets added in the first place.
-  fileQuestions.erase(fileQuestions.begin() + fileQuestions.size() - 1);
 
   std::vector<Question> dbQuestions;
   SQLite::Statement query (database, "SELECT * FROM questions;");

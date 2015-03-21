@@ -73,9 +73,7 @@ int main(int argv, char** argc) {
   std::cout << "Images processed" << std::endl;
   Report report (&database);
   report.initialize();
-  std::cout << "Fields initialized" << std::endl;
-  report.parse();
-  std::cout << "Data parsed" << std::endl;
+  std::cout << "Fields initialized and data parsed" << std::endl;
   report.writeToFile(reportFile);
   std::cout << "Converted to csv" << std::endl;
   return 0;
