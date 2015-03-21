@@ -4,6 +4,8 @@ MultipleChoice::MultipleChoice(std::vector<Question> qs) {
   questions = qs;
 }
 
+MultipleChoice::~MultipleChoice() {}
+
 void MultipleChoice::parse() {
   int index = -1;
   for(int i=0; i<questions.size(); i++) {

@@ -21,10 +21,10 @@ Report::~Report() {
 void Report::initialize() {
   std::vector<Question> questions = database->getQuestions();
   for(int i=0; i<questions.size(); i++) {
-    std::string tag = getTag(questions[i].getName());
+    std::string tag = questions[i].getName();
     if(std::find(tags.begin(), tags.end(), tag) == tags.end()) {
       tags.push_back(tag);
-      int dots = countDots(tag);
+      int dots = std::count(tag.begin(), tag.end(), '.');
       if(dots == 0) {
 	CBTags.push_back(tag);
       }
@@ -51,7 +51,9 @@ void Report::initialize() {
 	  qs.push_back(pageQs[k]);
 	}
       }
-      fs.push_back(new CheckBox(qs));
+      CheckBox *cb = new CheckBox(qs);
+      cb->parse();
+      fs.push_back(cb);
     }
 
     for(int j=0; j<NumTags.size(); j++) {
@@ -61,7 +63,9 @@ void Report::initialize() {
 	  qs.push_back(pageQs[k]);
 	}
       }
-      fs.push_back(new Number(qs));
+      Number *num = new Number(qs);
+      num->parse();
+      fs.push_back(num);
     }
 
     for(int j=0; j<MCTags.size(); j++) {
@@ -71,18 +75,12 @@ void Report::initialize() {
 	  qs.push_back(pageQs[k]);
 	}
       }
-      fs.push_back(new MultipleChoice(qs));
+      MultipleChoice *mc = new MultipleChoice(qs);
+      mc->parse();
+      fs.push_back(mc);
     }
 
     fields.push_back(fs);
-  }
-}
-
-void Report::parse() {
-  for(int i=0; i<fields.size(); i++) {
-    for(int j=0; j<fields[i].size(); j++) {
-      fields[i][j]->parse();
-    }
   }
 }
 
@@ -102,16 +100,6 @@ void Report::writeToFile(std::string reportFile) {
   }
   
   fout.close();
-}
-
-int Report::countDots(std::string s) {
-  int total = 0;
-  for(int i=0; i<s.size(); i++) {
-    if(s[i] == '.') {
-      total++;
-    }
-  }
-  return total;
 }
 
  std::string Report::getTag(std::string s) {

@@ -41,16 +41,12 @@ class Report {
   ~Report();
 
   /**
-   * Read the binary data from the database and store it as Fields.
+   * Read the binary data from the database and store it as Fields and tell those
+   * Fields to parse it.
    */
 
   void initialize();
 
-  /**
-   * Tell each Field to parse its binary data into a real value.
-   */
-
-  void parse();
 
   /**
    * Retrieve the parsed values from each Field and write it to a file in either
