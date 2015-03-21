@@ -13,7 +13,7 @@ class CheckBox : public Field {
   std::string getValue();
   std::string getTag();
  private:
-  bool value;
+  std::string value;
   std::string tag;
   std::vector<Question> questions;
 };

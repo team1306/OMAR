@@ -15,7 +15,7 @@ class Number : public Field {
 
  private:
   std::string tag;
-  int value;
+  std::string value;
   std::vector<Question> questions;
 };
 

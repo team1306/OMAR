@@ -4,9 +4,13 @@
 
 void Field::parse() {}
 
-std::string Field::getValue() {}
+std::string Field::getValue() {
+  return value;
+}
 
-std::string Field::getTag() {}
+std::string Field::getTag() {
+  return tag;
+}
 
 std::vector<std::string>& Field::split(const std::string &s, char delim, std::vector<std::string> &elems) {
     std::stringstream ss(s);
@@ -22,3 +26,4 @@ std::vector<std::string> Field::split(const std::string &s, char delim) {
     split(s, delim, elems);
     return elems;
 }
+

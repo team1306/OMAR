@@ -5,20 +5,21 @@ MultipleChoice::MultipleChoice(std::vector<Question> qs) {
 }
 
 void MultipleChoice::parse() {
+  int index = -1;
   for(int i=0; i<questions.size(); i++) {
     if(questions[i].getAnswer()) {
-      value = i;
+      index = i;
       break;
     }
+  }
+
+  if(index == -1) {
+    value = "";
+  }
+  else {
+    value = questions[index].getName();
   }
 
   tag = split(questions[0].getName(), '.')[0];
 }
 
-std::string MultipleChoice::getValue() {
-  return questions[value].getName();
-}
-
-std::string MultipleChoice::getTag() {
-  return tag;
-}
