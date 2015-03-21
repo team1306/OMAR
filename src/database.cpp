@@ -21,6 +21,7 @@ Database::Database(std::string dbfilename, std::string posfile) : database(dbfil
     pos >> s >> a.x >> a.y >> b.x >> b.y;
     fileQuestions.push_back(Question(a, b, s));
   }
+  fileQuestions.erase(fileQuestions.end() - 1);
 
   std::vector<Question> dbQuestions;
   SQLite::Statement query (database, "SELECT * FROM questions;");
