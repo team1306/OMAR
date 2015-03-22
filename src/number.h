@@ -14,8 +14,10 @@ class Number : public Field {
   std::string getTag();
 
  private:
+  /*
   std::string tag;
   std::string value;
+  */
   std::vector<Question> questions;
 };
 

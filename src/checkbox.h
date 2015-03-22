@@ -13,8 +13,10 @@ class CheckBox : public Field {
   std::string getValue();
   std::string getTag();
  private:
+  /*
   std::string value;
   std::string tag;
+  */
   std::vector<Question> questions;
 };
 

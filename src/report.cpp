@@ -29,10 +29,10 @@ void Report::initialize() {
 	CBTags.push_back(tag);
       }
       else if(dots == 2) {
-	MCTags.push_back(tag);
+	MCTags.push_back(getTag(tag));
       }
       else if(dots == 3) {
-	NumTags.push_back(tag);
+	NumTags.push_back(getTag(tag));
       }
     }
   }
@@ -41,14 +41,13 @@ void Report::initialize() {
   std::vector<Page> pages = database->getPages();
   for(int i=0; i<pages.size(); i++) {
     std::vector<Field*> fs;
-    std::vector<Question> pageQs = pages[i].getQuestions();
 
     // sort checkbox tags
     for(int j=0; j<CBTags.size(); j++) {
       std::vector<Question> qs;
-      for(int k=0; k<pageQs.size(); k++) {
-	if(getTag(pageQs[k].getName()) == CBTags[j]) {
-	  qs.push_back(pageQs[k]);
+      for(int k=0; k<questions.size(); k++) {
+	if(getTag(questions[k].getName()) == CBTags[j]) {
+	  qs.push_back(questions[k]);
 	}
       }
       CheckBox *cb = new CheckBox(qs);
@@ -57,10 +56,11 @@ void Report::initialize() {
     }
 
     for(int j=0; j<NumTags.size(); j++) {
-      std::vector<Question> qs;
-      for(int k=0; k<pageQs.size(); k++) {
-	if(getTag(pageQs[k].getName()) == NumTags[j]) {
-	  qs.push_back(pageQs[k]);
+      std::vector<Question> qs;//rohan was here
+      for(int k=0; k<questions.size(); k++) {
+	std::cout << getTag(questions[k].getName()) << " | " << NumTags[j] << std::endl;
+	if(getTag(questions[k].getName()) == NumTags[j]) {
+	  qs.push_back(questions[k]);
 	}
       }
       Number *num = new Number(qs);
@@ -70,9 +70,9 @@ void Report::initialize() {
 
     for(int j=0; j<MCTags.size(); j++) {
       std::vector<Question> qs;
-      for(int k=0; k<pageQs.size(); k++) {
-	if(getTag(pageQs[k].getName()) == MCTags[j]) {
-	  qs.push_back(pageQs[k]);
+      for(int k=0; k<questions.size(); k++) {
+	if(getTag(questions[k].getName()) == MCTags[j]) {
+	  qs.push_back(questions[k]);
 	}
       }
       MultipleChoice *mc = new MultipleChoice(qs);
